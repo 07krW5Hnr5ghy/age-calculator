@@ -1,0 +1,54 @@
+body{
+    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;    
+}
+.page-wrapper{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.calculator-wrapper{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap:10px;
+    width: 350px;
+}
+.label-wrapper{
+    display: flex;
+    flex-direction: row;
+    justify-content: left;
+    align-items: center;
+    width: 100%;
+    font-size: 10pt;
+}
+.date-wrapper{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    border: 2px solid black;
+    border-radius: 6px;
+    padding: 6px;
+    width: 96%;
+}
+.date-input{
+    border: none;
+}
+.calendar-button{
+    background-color: transparent;
+    border: none;
+}
+.calculate-button{
+    width: 100%;
+    background-color: black;
+    color:white;
+    border: none;
+    border-radius: 6px;
+    font-size: 11pt;
+    padding: 8px;
+}
+.answer-wrapper{
+    font-size: 14pt;
+}
