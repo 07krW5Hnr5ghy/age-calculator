@@ -16,10 +16,11 @@
                     <label>Enter your birth date:</label>
                 </div>
                 <div class="date-wrapper">
-                    <input class="date-input" placeholder="dd/mm/yy"/>
+                    <input class="date-input" id="date-input" placeholder="dd/mm/yy" readonly/>
                     <button class="calendar-button">
                         <i class="fa-solid fa-calendar-days"></i>
                     </button>
+                    <div class="calendar" id="calendar"></div>
                 </div>
                 <button class="calculate-button" type="submit">Calculate</button>
             </form>
@@ -27,5 +28,6 @@
                 <p class="answer">You are <strong>21 years 10 months</strong> old</p>
             </div>
         </div>
+        <script src="js/script.js"></script>
     </body>
 </html>

@@ -32,13 +32,44 @@ body{
     border-radius: 6px;
     padding: 6px;
     width: 96%;
+    position: relative;
 }
 .date-input{
     border: none;
+    width: 90%;
 }
 .calendar-button{
     background-color: transparent;
     border: none;
+}
+.calendar{
+    position: absolute;
+    top:100%;
+    left:0;
+    width: 100%;
+    background: white;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    display: none;
+    padding:10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0,0.1);
+    z-index:1000;
+}
+.calendar table{
+    width: 100%;
+    border-collapse: collapse;
+}
+.calendar th{
+    background: #007bff;
+    color:white;
+}
+.calendar td:hover{
+    background: #f0f0f0;
+}
+.calendar .current-date{
+    background: #007bff;
+    color:white;
+    border-radius: 50%;
 }
 .calculate-button{
     width: 100%;
