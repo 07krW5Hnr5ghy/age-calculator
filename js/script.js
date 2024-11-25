@@ -10,42 +10,6 @@ const daysOfWeek = ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
 const yearWrapper = document.createElement("div");
 const yearButton = document.createElement("button");
 
-// create year-month menu
-const yearMonthWrapper = document.createElement("div");
-yearMonthWrapper.style.display = "none";
-yearMonthWrapper.classList.add("year-month-wrapper");
-
-// create table structure
-const table = document.createElement("table");
-const headerRow = document.createElement("tr");
-
-// create month and year selector
-const yearSelector = document.createElement("div");
-const monthSelector = document.createElement("div");
-
-yearWrapper.classList.add("year-wrapper");
-yearButton.classList.add("year-button");
-
-yearButton.setAttribute("type","button");
-yearWrapper.appendChild(yearButton);
-
-monthSelector.classList.add("month-selector");
-yearSelector.classList.add("year-selector");
-
-yearMonthWrapper.appendChild(monthSelector);
-yearMonthWrapper.appendChild(yearSelector);
-
-// month selector left button
-const leftMonthButton = document.createElement("button");
-leftMonthButton.classList.add("month-button");
-leftMonthButton.innerText = "<";
-monthSelector.appendChild(leftMonthButton);
-const rightMonthButton = document.createElement("button");
-rightMonthButton.innerText = ">";
-rightMonthButton.classList.add("month-button");
-
-
-
 let selectedDate = null;
 
 function generateCalendar(year,month){
@@ -56,21 +20,13 @@ function generateCalendar(year,month){
     console.log(firstDayIndex);
 
     calendar.appendChild(yearWrapper);
-    calendar.appendChild(yearMonthWrapper);
 
     yearButton.innerText = `${months[month]} ${year}`;
 
-    // populate month selector
-    for(let monthIndex = month-2,cycle = 0;cycle<5;cycle++){
-        const monthDiv = document.createElement("div");
-        if(monthIndex===12){
-            monthIndex = 0;
-        }
-        monthDiv.innerText = months[monthIndex];
-        monthSelector.appendChild(monthDiv);
-        monthIndex++;
-    }
-    monthSelector.appendChild(rightMonthButton);
+    // create table structure
+    const table = document.createElement("table");
+    const headerRow = document.createElement("tr");
+
     // add week day names
     daysOfWeek.forEach(day=>{
         const th = document.createElement("th");
@@ -133,17 +89,7 @@ dateButton.addEventListener("click",()=>{
 
 // toggle on/off year month menu
 yearButton.addEventListener("click",()=>{
-    if(yearMonthWrapper.style.display === "block"){
-        console.log("click1");
-        yearMonthWrapper.style.display = "none";
-        table.style.display = "block";
-    }
-    if(yearMonthWrapper.style.display === "none"){
-        console.log("click2");
-        table.style.display = "none";
-        yearMonthWrapper.style.display = "block";
-        yearMonthWrapper.classList.add("year-month-wrapper");
-    }
+    
 });
 
 // close the calendar when clicking outside
