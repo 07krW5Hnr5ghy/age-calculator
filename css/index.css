@@ -46,7 +46,7 @@ body{
     position: absolute;
     top:100%;
     left:0;
-    width: 100%;
+    width: 94%;
     background: white;
     border: 1px solid #ccc;
     border-radius: 4px;
@@ -54,6 +54,16 @@ body{
     padding:10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0,0.1);
     z-index:1000;
+}
+.year-wrapper{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+.year-month-wrapper{
+    width: 100%;
+    background-color: black;
 }
 .calendar table{
     width: 100%;

@@ -1,5 +1,21 @@
 const dateInput = document.querySelector("#date-input");
+const dateButton = document.querySelector("#calendar-button");
 const calendar = document.querySelector("#calendar");
+
+// create years button
+const yearWrapper = document.createElement("div");
+const yearButton = document.createElement("button");
+
+// create year-month menu
+const yearMonthWrapper = document.createElement("div");
+yearMonthWrapper.style.display = "none";
+yearMonthWrapper.classList.add("year-month-wrapper");
+
+// create table structure
+const table = document.createElement("table");
+const headerRow = document.createElement("tr");
+const daysOfWeek = ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
+
 let selectedDate = null;
 
 function generateCalendar(year,month){
@@ -9,10 +25,10 @@ function generateCalendar(year,month){
     const firstDayIndex = new Date(year,month,1).getDay();
     console.log(firstDayIndex);
 
-    // create table structure
-    const table = document.createElement("table");
-    const headerRow = document.createElement("tr");
-    const daysOfWeek = ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
+    calendar.appendChild(yearWrapper);
+    calendar.appendChild(yearMonthWrapper);
+
+    yearButton.innerText = year;
 
     // add week day names
     daysOfWeek.forEach(day=>{
@@ -63,8 +79,14 @@ function generateCalendar(year,month){
     calendar.appendChild(table);
 }
 
+yearWrapper.classList.add("year-wrapper");
+yearButton.classList.add("year-button");
+
+yearButton.setAttribute("type","button");
+yearWrapper.appendChild(yearButton);
+
 // show / hide calendar
-dateInput.addEventListener("click",()=>{
+dateButton.addEventListener("click",()=>{
     if(calendar.style.display === "block"){
         calendar.style.display = "none";
     }else{
@@ -74,9 +96,25 @@ dateInput.addEventListener("click",()=>{
     }
 });
 
+// toggle on/off year month menu
+yearButton.addEventListener("click",()=>{
+    if(yearMonthWrapper.style.display === "block"){
+        console.log("click1");
+        yearMonthWrapper.style.display = "none";
+        table.style.display = "block";
+    }
+    if(yearMonthWrapper.style.display === "none"){
+        console.log("click2");
+        table.style.display = "none";
+        yearMonthWrapper.style.display = "block";
+        yearMonthWrapper.classList.add("year-month-wrapper");
+    }
+});
+
 // close the calendar when clicking outside
 document.addEventListener("click",(event)=>{
     if(!event.target.closest(".date-wrapper")){
         calendar.style.display = "none";
     }
 });
+
