@@ -2,6 +2,10 @@ const dateInput = document.querySelector("#date-input");
 const dateButton = document.querySelector("#calendar-button");
 const calendar = document.querySelector("#calendar");
 
+// lists
+const months = ["january","february","march","april","may","june","july","august","september","october","november","december"];
+const daysOfWeek = ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
+
 // create years button
 const yearWrapper = document.createElement("div");
 const yearButton = document.createElement("button");
@@ -14,7 +18,33 @@ yearMonthWrapper.classList.add("year-month-wrapper");
 // create table structure
 const table = document.createElement("table");
 const headerRow = document.createElement("tr");
-const daysOfWeek = ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
+
+// create month and year selector
+const yearSelector = document.createElement("div");
+const monthSelector = document.createElement("div");
+
+yearWrapper.classList.add("year-wrapper");
+yearButton.classList.add("year-button");
+
+yearButton.setAttribute("type","button");
+yearWrapper.appendChild(yearButton);
+
+monthSelector.classList.add("month-selector");
+yearSelector.classList.add("year-selector");
+
+yearMonthWrapper.appendChild(monthSelector);
+yearMonthWrapper.appendChild(yearSelector);
+
+// month selector left button
+const leftMonthButton = document.createElement("button");
+leftMonthButton.classList.add("month-button");
+leftMonthButton.innerText = "<";
+monthSelector.appendChild(leftMonthButton);
+const rightMonthButton = document.createElement("button");
+rightMonthButton.innerText = ">";
+rightMonthButton.classList.add("month-button");
+
+
 
 let selectedDate = null;
 
@@ -28,8 +58,19 @@ function generateCalendar(year,month){
     calendar.appendChild(yearWrapper);
     calendar.appendChild(yearMonthWrapper);
 
-    yearButton.innerText = year;
+    yearButton.innerText = `${months[month]} ${year}`;
 
+    // populate month selector
+    for(let monthIndex = month-2,cycle = 0;cycle<5;cycle++){
+        const monthDiv = document.createElement("div");
+        if(monthIndex===12){
+            monthIndex = 0;
+        }
+        monthDiv.innerText = months[monthIndex];
+        monthSelector.appendChild(monthDiv);
+        monthIndex++;
+    }
+    monthSelector.appendChild(rightMonthButton);
     // add week day names
     daysOfWeek.forEach(day=>{
         const th = document.createElement("th");
@@ -78,12 +119,6 @@ function generateCalendar(year,month){
     table.appendChild(row); // add the last row
     calendar.appendChild(table);
 }
-
-yearWrapper.classList.add("year-wrapper");
-yearButton.classList.add("year-button");
-
-yearButton.setAttribute("type","button");
-yearWrapper.appendChild(yearButton);
 
 // show / hide calendar
 dateButton.addEventListener("click",()=>{

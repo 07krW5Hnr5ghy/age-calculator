@@ -63,7 +63,16 @@ body{
 }
 .year-month-wrapper{
     width: 100%;
-    background-color: black;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+.month-selector{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 .calendar table{
     width: 100%;
