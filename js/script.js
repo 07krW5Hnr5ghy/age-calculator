@@ -9,6 +9,10 @@ const daysOfWeek = ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
 // create navigation menu
 const monthYearWrapper = document.createElement("div");
 monthYearWrapper.classList.add("month-year-wrapper");
+const yearLeftButton = document.createElement("button");
+yearLeftButton.type = "button";
+yearLeftButton.innerText = "<<";
+monthYearWrapper.appendChild(yearLeftButton);
 const monthLeftButton = document.createElement("button");
 monthLeftButton.type = "button";
 monthLeftButton.innerText = "<";
@@ -23,6 +27,12 @@ const monthRightButton = document.createElement("button");
 monthRightButton.type = "button";
 monthRightButton.innerText = ">";
 monthYearWrapper.appendChild(monthRightButton);
+const yearRightButton = document.createElement("button");
+yearRightButton.type = "button";
+yearRightButton.innerText = ">>";
+monthYearWrapper.appendChild(yearRightButton);
+
+
 
 // create year menu section
 const yearsWrapper = document.createElement("div");
@@ -174,4 +184,13 @@ monthRightButton.addEventListener("click",()=>{
     }else{
         generateCalendar(Number(yearButton.innerText),months.indexOf(monthButton.innerText)+1);
     }
+});
+
+// left and right year button navigation
+yearLeftButton.addEventListener("click",()=>{
+    generateCalendar(Number(yearButton.innerText)-1,months.indexOf(monthButton.innerText));
+});
+
+yearRightButton.addEventListener("click",()=>{
+    generateCalendar(Number(yearButton.innerText)+1,months.indexOf(monthButton.innerText));
 });
