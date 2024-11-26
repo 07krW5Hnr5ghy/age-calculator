@@ -6,15 +6,23 @@ const calendar = document.querySelector("#calendar");
 const months = ["january","february","march","april","may","june","july","august","september","october","november","december"];
 const daysOfWeek = ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
 
-// create years button
+// create navigation menu
 const monthYearWrapper = document.createElement("div");
 monthYearWrapper.classList.add("month-year-wrapper");
+const monthLeftButton = document.createElement("button");
+monthLeftButton.type = "button";
+monthLeftButton.innerText = "<";
+monthYearWrapper.appendChild(monthLeftButton);
 const monthButton = document.createElement("div");
 monthButton.classList.add("month-year-button");
 monthYearWrapper.appendChild(monthButton);
 const yearButton = document.createElement("div");
 yearButton.classList.add("month-year-button");
 monthYearWrapper.appendChild(yearButton);
+const monthRightButton = document.createElement("button");
+monthRightButton.type = "button";
+monthRightButton.innerText = ">";
+monthYearWrapper.appendChild(monthRightButton);
 
 // create year menu section
 const yearsWrapper = document.createElement("div");
@@ -129,8 +137,10 @@ monthButton.addEventListener("click",()=>{
         });
     });
     calendar.appendChild(monthsWrapper);
-    /* remove year and month buttons and replace with current year button */
+    // hide month, left month and right month buttons
     monthButton.style.display = "none";
+    monthLeftButton.style.display = "none";
+    monthRightButton.style.display = "none";
 });
 
 // toggle on/off year menu
