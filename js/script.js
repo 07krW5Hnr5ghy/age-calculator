@@ -194,16 +194,27 @@ yearButton.addEventListener("click",()=>{
 
 // enter range years mode
 rangeYearButton.addEventListener("click",()=>{
-    tenYearsRangeMode = false;
     // remove all childs from yearsRange element
     while(yearsWrapper.firstChild){
         yearsWrapper.removeChild(yearsWrapper.firstChild);
     }
-    yearsRanges.forEach(yearRange=>{
-        const yearRangeDiv = document.createElement("div");
-        yearRangeDiv.innerText = yearRange;
-        yearsWrapper.appendChild(yearRangeDiv);
-    });
+
+    if(tenYearsRangeMode){
+        tenYearsRangeMode = false;
+        yearsRanges.forEach(yearRange=>{
+            const yearRangeDiv = document.createElement("div");
+            yearRangeDiv.innerText = yearRange;
+            yearsWrapper.appendChild(yearRangeDiv);
+        });
+    }else{
+        yearsRange.forEach(year=>{
+            const yearDiv = document.createElement("div");
+            yearDiv.innerText = year;
+            yearsWrapper.appendChild(yearDiv);
+        }); 
+    }
+    
+    
 });
 
 // left and right month button navigation
