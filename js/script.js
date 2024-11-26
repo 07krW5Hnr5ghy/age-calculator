@@ -181,6 +181,7 @@ yearButton.addEventListener("click",()=>{
     monthYearWrapper.removeChild(yearRightButton);
     monthYearWrapper.appendChild(rangeYearButton);
     monthYearWrapper.appendChild(yearRightButton);
+    yearsWrapper.style.display = "flex";
     // remove all childs from yearsRange element
     while(yearsWrapper.firstChild){
         yearsWrapper.removeChild(yearsWrapper.firstChild);
@@ -200,6 +201,7 @@ yearButton.addEventListener("click",()=>{
         yearsWrapper.appendChild(yearDiv);
     });
     calendar.appendChild(yearsWrapper);
+    rangeYearButton.innerText = `${yearsRange[1]} - ${yearsRange[yearsRange.length-1]}`;
 });
 
 // enter range years mode
