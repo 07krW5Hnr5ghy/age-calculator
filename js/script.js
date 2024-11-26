@@ -98,7 +98,6 @@ function generateCalendar(year,month){
     yearsRanges = [];
     for(let iYear = hundredYearRangeStart-10;iYear<=hundredYearRangeStart+100;iYear+=10){
         let subRange = `${iYear} - ${iYear+10}`;
-        console.log(subRange);
         yearsRanges.push(subRange);
     }
 
@@ -153,6 +152,7 @@ function generateCalendar(year,month){
             dateInput.value = selectedDate.toISOString().split("T")[0].replaceAll("-","/");
             calendar.style.display = "none"; // Hide the calendar
             generateCalendar(year,month); // Re-render calendar
+            yearNavigationModeFlag = yearNavigationModes.year;
         });
 
         row.appendChild(cell);
@@ -234,13 +234,17 @@ yearButton.addEventListener("click",()=>{
 // enter range years mode
 rangeYearButton.addEventListener("click",()=>{
     console.log(yearNavigationModeFlag);
-    clearChildElements(yearsWrapper);
+    
     if(yearNavigationModeFlag===yearNavigationModes.tenYears){
+        clearChildElements(yearsWrapper);
+        console.log("10 years");
         yearsRanges.forEach(yearRange=>{
             yearsWrapper.appendChild(createYearRangeDiv(yearRange,()=>{
                 generateCalendar(Number(yearRange.slice(0,4)),months.indexOf(monthButton.innerText));
+                console.log("clicking ten years range");
                 calendar.childNodes[1].style.display = "none";
                 clearChildElements(yearsWrapper);
+                console.log(`entering mode ${yearNavigationModeFlag}`);
                 yearsRange.forEach(year=>{
                     yearsWrapper.appendChild(createYearDiv(year,()=>{
                         generateCalendar(year,months.indexOf(monthButton.innerText));
@@ -254,30 +258,13 @@ rangeYearButton.addEventListener("click",()=>{
                         yearNavigationModeFlag = yearNavigationModes.tenYears;
                     }));
                 });
+                yearNavigationModeFlag=yearNavigationModes.tenYears;
                 rangeYearButton.innerText = `${yearsRange[1]} - ${yearsRange[yearsRange.length-1]}`;
             }));
             calendar.appendChild(yearsWrapper);
         });
         rangeYearButton.innerText = `${yearsRanges[1].slice(0,4)} - ${yearsRanges[yearsRanges.length-2].slice(-4)}`;
         yearNavigationModeFlag = yearNavigationModes.hundredYears;
-    }
-
-    if(yearNavigationModeFlag === yearNavigationModes.tenYears){
-        console.log("10 years");
-        yearsRange.forEach(year=>{
-            yearsWrapper.appendChild(createYearDiv(year,()=>{
-                generateCalendar(year,months.indexOf(monthButton.innerText));
-                monthYearWrapper.removeChild(rangeYearButton);
-                yearButton.style.display = "block";
-                monthLeftButton.style.display = "block";
-                monthRightButton.style.display = "block";
-                monthButton.style.display = "block";
-                yearButton.innerText = year;
-                yearNavigationModeFlag = yearNavigationModes.year;
-            }));
-        });
-        rangeYearButton.innerText = `${yearsRange[1]} - ${yearsRange[yearsRange.length-1]}`;
-        yearNavigationModeFlag = yearNavigationModes.tenYears;
     }
 });
 
@@ -344,6 +331,7 @@ yearLeftButton.addEventListener("click",()=>{
                         yearButton.innerText = year;
                         yearsWrapper.style.display = "none";
                         yearNavigationModeFlag = yearNavigationModes.tenYears;
+                        console.log(`entering mode ${yearNavigationModeFlag}`);
                     }));
                 });
                 rangeYearButton.innerText = `${yearsRange[1]} - ${yearsRange[yearsRange.length-1]}`;
