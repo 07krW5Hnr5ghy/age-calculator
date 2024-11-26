@@ -1,3 +1,4 @@
+const form = document.querySelector("#calculator-wrapper");
 const dateInput = document.querySelector("#date-input");
 const dateButton = document.querySelector("#calendar-button");
 const calendar = document.querySelector("#calendar");
@@ -128,7 +129,7 @@ function generateCalendar(year,month){
 
         cell.addEventListener("click",()=>{
             selectedDate = new Date(year,month,day);
-            dateInput.value = selectedDate.toISOString().split("T")[0];
+            dateInput.value = selectedDate.toISOString().split("T")[0].replaceAll("-","/");
             calendar.style.display = "none"; // Hide the calendar
             generateCalendar(year,month); // Re-render calendar
         });
@@ -299,9 +300,151 @@ monthRightButton.addEventListener("click",()=>{
 
 // left and right year button navigation
 yearLeftButton.addEventListener("click",()=>{
-    generateCalendar(Number(yearButton.innerText)-1,months.indexOf(monthButton.innerText));
+    if(yearNavigationModeFlag===yearNavigationModes.year){
+        generateCalendar(Number(yearButton.innerText)-1,months.indexOf(monthButton.innerText));
+    }
+    if(yearNavigationModeFlag===yearNavigationModes.tenYears){
+        generateCalendar(Number(yearButton.innerText)-10,months.indexOf(monthButton.innerText));
+        // hide calendar days
+        calendar.childNodes[1].style.display = "none";
+        // remove all childs from yearsRange element
+        while(yearsWrapper.firstChild){
+            yearsWrapper.removeChild(yearsWrapper.firstChild);
+        }
+        yearsRange.forEach(year=>{
+            const yearDiv = document.createElement("div");
+            yearDiv.innerText = year;
+            yearDiv.addEventListener("click",()=>{
+                generateCalendar(year,months.indexOf(monthButton.innerText));
+                monthYearWrapper.removeChild(rangeYearButton);
+                yearButton.style.display = "block";
+                monthLeftButton.style.display = "block";
+                monthRightButton.style.display = "block";
+                monthButton.style.display = "block";
+                yearsWrapper.style.display = "none";
+                yearButton.innerText = year;
+                yearNavigationModeFlag = yearNavigationModes.year;
+            });
+            yearsWrapper.appendChild(yearDiv);
+        });
+    }
+    if(yearNavigationModeFlag===yearNavigationModes.hundredYears){
+        generateCalendar(Number(yearButton.innerText)-100,months.indexOf(monthButton.innerText));
+        // hide calendar days
+        calendar.childNodes[1].style.display = "none";
+        // remove all childs from yearsRange element
+        while(yearsWrapper.firstChild){
+            yearsWrapper.removeChild(yearsWrapper.firstChild);
+        }
+        yearsRanges.forEach(yearRange=>{
+            const yearRangeDiv = document.createElement("div");
+            yearRangeDiv.innerText = yearRange;
+            yearRangeDiv.addEventListener("click",()=>{
+                console.log(yearRangeDiv.innerText);
+                generateCalendar(Number(yearRangeDiv.innerText.slice(0,4)),months.indexOf(monthButton.innerText));
+                calendar.childNodes[1].style.display = "none";
+                // remove all childs from yearsRange element
+                while(yearsWrapper.firstChild){
+                    yearsWrapper.removeChild(yearsWrapper.firstChild);
+                }
+                yearsRange.forEach(year=>{
+                    const yearDiv = document.createElement("div");
+                    yearDiv.innerText = year;
+                    yearDiv.addEventListener("click",()=>{
+                        generateCalendar(year,months.indexOf(monthButton.innerText));
+                        monthYearWrapper.removeChild(rangeYearButton);
+                        yearButton.style.display = "block";
+                        monthLeftButton.style.display = "block";
+                        monthRightButton.style.display = "block";
+                        monthButton.style.display = "block";
+                        yearButton.innerText = year;
+                        yearsWrapper.style.display = "none";
+                        yearNavigationModeFlag = yearNavigationModes.tenYears;
+                    });
+                    yearsWrapper.appendChild(yearDiv);
+                });
+                rangeYearButton.innerText = `${yearsRange[1]} - ${yearsRange[yearsRange.length-1]}`;
+            });
+            yearsWrapper.appendChild(yearRangeDiv);
+            calendar.appendChild(yearsWrapper);
+        });
+    }
 });
 
 yearRightButton.addEventListener("click",()=>{
-    generateCalendar(Number(yearButton.innerText)+1,months.indexOf(monthButton.innerText));
+    if(yearNavigationModeFlag===yearNavigationModes.year){
+        generateCalendar(Number(yearButton.innerText)+1,months.indexOf(monthButton.innerText));
+    }
+    if(yearNavigationModeFlag===yearNavigationModes.tenYears){
+        generateCalendar(Number(yearButton.innerText)+10,months.indexOf(monthButton.innerText));
+        // hide calendar days
+        calendar.childNodes[1].style.display = "none";
+        // remove all childs from yearsRange element
+        while(yearsWrapper.firstChild){
+            yearsWrapper.removeChild(yearsWrapper.firstChild);
+        }
+        yearsRange.forEach(year=>{
+            const yearDiv = document.createElement("div");
+            yearDiv.innerText = year;
+            yearDiv.addEventListener("click",()=>{
+                generateCalendar(year,months.indexOf(monthButton.innerText));
+                monthYearWrapper.removeChild(rangeYearButton);
+                yearButton.style.display = "block";
+                monthLeftButton.style.display = "block";
+                monthRightButton.style.display = "block";
+                monthButton.style.display = "block";
+                yearsWrapper.style.display = "none";
+                yearButton.innerText = year;
+                yearNavigationModeFlag = yearNavigationModes.year;
+            });
+            yearsWrapper.appendChild(yearDiv);
+        });
+    }
+    if(yearNavigationModeFlag===yearNavigationModes.hundredYears){
+        generateCalendar(Number(yearButton.innerText)+100,months.indexOf(monthButton.innerText));
+        // hide calendar days
+        calendar.childNodes[1].style.display = "none";
+        // remove all childs from yearsRange element
+        while(yearsWrapper.firstChild){
+            yearsWrapper.removeChild(yearsWrapper.firstChild);
+        }
+        yearsRanges.forEach(yearRange=>{
+            const yearRangeDiv = document.createElement("div");
+            yearRangeDiv.innerText = yearRange;
+            yearRangeDiv.addEventListener("click",()=>{
+                console.log(yearRangeDiv.innerText);
+                generateCalendar(Number(yearRangeDiv.innerText.slice(0,4)),months.indexOf(monthButton.innerText));
+                calendar.childNodes[1].style.display = "none";
+                // remove all childs from yearsRange element
+                while(yearsWrapper.firstChild){
+                    yearsWrapper.removeChild(yearsWrapper.firstChild);
+                }
+                yearsRange.forEach(year=>{
+                    const yearDiv = document.createElement("div");
+                    yearDiv.innerText = year;
+                    yearDiv.addEventListener("click",()=>{
+                        generateCalendar(year,months.indexOf(monthButton.innerText));
+                        monthYearWrapper.removeChild(rangeYearButton);
+                        yearButton.style.display = "block";
+                        monthLeftButton.style.display = "block";
+                        monthRightButton.style.display = "block";
+                        monthButton.style.display = "block";
+                        yearButton.innerText = year;
+                        yearsWrapper.style.display = "none";
+                        yearNavigationModeFlag = yearNavigationModes.tenYears;
+                    });
+                    yearsWrapper.appendChild(yearDiv);
+                });
+                rangeYearButton.innerText = `${yearsRange[1]} - ${yearsRange[yearsRange.length-1]}`;
+            });
+            yearsWrapper.appendChild(yearRangeDiv);
+            calendar.appendChild(yearsWrapper);
+        });
+    }
+});
+
+// loading the page again
+window.addEventListener("load",()=>{
+    console.log("carga");
+    form.reset();
 });
