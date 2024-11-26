@@ -445,6 +445,5 @@ yearRightButton.addEventListener("click",()=>{
 
 // loading the page again
 window.addEventListener("load",()=>{
-    console.log("carga");
     form.reset();
 });
