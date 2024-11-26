@@ -102,8 +102,6 @@ function generateCalendar(year,month){
         row.appendChild(cell);
     }
 
-    
-
     table.appendChild(row); // add the last row
     calendar.appendChild(monthYearWrapper);
     calendar.appendChild(table);  
@@ -161,3 +159,19 @@ yearButton.addEventListener("click",()=>{
     calendar.appendChild(yearsWrapper);
 });
 
+// left and right month button navigation
+monthLeftButton.addEventListener("click",()=>{
+    if((months.indexOf(monthButton.innerText)-1)<0){
+        generateCalendar(Number(yearButton.innerText)-1,11);
+    }else{
+        generateCalendar(Number(yearButton.innerText),months.indexOf(monthButton.innerText)-1);
+    }
+});
+
+monthRightButton.addEventListener("click",()=>{
+    if((months.indexOf(monthButton.innerText)+1)>11){
+        generateCalendar(Number(yearButton.innerText)+1,0);
+    }else{
+        generateCalendar(Number(yearButton.innerText),months.indexOf(monthButton.innerText)+1);
+    }
+});
