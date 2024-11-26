@@ -40,9 +40,10 @@ yearsWrapper.classList.add("years-wrapper");
 const rangeYearButton = document.createElement("div");
 rangeYearButton.classList.add("range-year-button");
 
-
 let selectedDate = null;
 let yearsRange = [];
+let yearsRanges = [];
+let tenYearsRangeMode = true;
 
 function generateCalendar(year,month){
     console.log(months[month]);
@@ -55,13 +56,29 @@ function generateCalendar(year,month){
 
     monthButton.innerText = months[month];
     yearButton.innerText = year;
-    
-    // range start year 
-    let yearRangeStart = year - Number(String(year).slice(3,4));
-    let yearRange = `${yearRangeStart} - ${yearRangeStart+10}`;
-    rangeYearButton.innerHTML = yearRange;
-    for(let iYear = yearRangeStart-1;iYear<=yearRangeStart+10;iYear++){
+
+    // ten years range 
+    let tenYearRangeStart = year - Number(String(year).slice(3,4));
+    let tenYearRange = `${tenYearRangeStart} - ${tenYearRangeStart+10}`;
+    yearsRange = [];
+    for(let iYear = tenYearRangeStart-1;iYear<=tenYearRangeStart+10;iYear++){
         yearsRange.push(iYear);
+    }
+
+    // hundred years range
+    let hundredYearRangeStart = year - Number(String(year).slice(2,4));
+    let hundredYearRange = `${hundredYearRangeStart} - ${hundredYearRangeStart+100}`;
+    yearsRanges = [];
+    for(let iYear = hundredYearRangeStart-10;iYear<=hundredYearRangeStart+100;iYear+=10){
+        let subRange = `${iYear} - ${iYear+10}`;
+        console.log(subRange);
+        yearsRanges.push(subRange);
+    }
+
+    if(tenYearsRangeMode){
+        rangeYearButton.innerText = tenYearRange;
+    }else{
+        rangeYearButton.innerText = hundredYearRange;
     }
     
     // create table structure
@@ -158,15 +175,35 @@ yearButton.addEventListener("click",()=>{
     /* remove year and month buttons and replace with year range button */
     yearButton.style.display = "none";
     monthButton.style.display = "none";
+    monthLeftButton.style.display = "none";
+    monthRightButton.style.display = "none";
+    monthYearWrapper.removeChild(yearRightButton);
     monthYearWrapper.appendChild(rangeYearButton);
-    const yearsWrapper = document.createElement("div");
-    yearsWrapper.classList.add("years-wrapper");
+    monthYearWrapper.appendChild(yearRightButton);
+    // remove all childs from yearsRange element
+    while(yearsWrapper.firstChild){
+        yearsWrapper.removeChild(yearsWrapper.firstChild);
+    }
     yearsRange.forEach(year=>{
         const yearDiv = document.createElement("div");
         yearDiv.innerText = year;
         yearsWrapper.appendChild(yearDiv);
     });
     calendar.appendChild(yearsWrapper);
+});
+
+// enter range years mode
+rangeYearButton.addEventListener("click",()=>{
+    tenYearsRangeMode = false;
+    // remove all childs from yearsRange element
+    while(yearsWrapper.firstChild){
+        yearsWrapper.removeChild(yearsWrapper.firstChild);
+    }
+    yearsRanges.forEach(yearRange=>{
+        const yearRangeDiv = document.createElement("div");
+        yearRangeDiv.innerText = yearRange;
+        yearsWrapper.appendChild(yearRangeDiv);
+    });
 });
 
 // left and right month button navigation
