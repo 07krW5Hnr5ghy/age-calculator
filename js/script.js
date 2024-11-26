@@ -3,6 +3,13 @@ const dateInput = document.querySelector("#date-input");
 const dateButton = document.querySelector("#calendar-button");
 const calendar = document.querySelector("#calendar");
 
+// utility functions
+function clearChildElements(parent){
+    while(parent.firstChild){
+        parent.removeChild(parent.firstChild);
+    }
+}
+
 // lists
 const months = ["january","february","march","april","may","june","july","august","september","october","november","december"];
 const daysOfWeek = ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
@@ -190,10 +197,7 @@ yearButton.addEventListener("click",()=>{
     monthYearWrapper.appendChild(rangeYearButton);
     monthYearWrapper.appendChild(yearRightButton);
     yearsWrapper.style.display = "flex";
-    // remove all childs from yearsRange element
-    while(yearsWrapper.firstChild){
-        yearsWrapper.removeChild(yearsWrapper.firstChild);
-    }
+    clearChildElements(yearsWrapper);
     yearsRange.forEach(year=>{
         const yearDiv = document.createElement("div");
         yearDiv.innerText = year;
@@ -217,11 +221,7 @@ yearButton.addEventListener("click",()=>{
 
 // enter range years mode
 rangeYearButton.addEventListener("click",()=>{
-    // remove all childs from yearsRange element
-    while(yearsWrapper.firstChild){
-        yearsWrapper.removeChild(yearsWrapper.firstChild);
-    }
-
+    clearChildElements(yearsWrapper);
     if(yearNavigationModeFlag===yearNavigationModes.tenYears){
         yearsRanges.forEach(yearRange=>{
             const yearRangeDiv = document.createElement("div");
@@ -230,10 +230,7 @@ rangeYearButton.addEventListener("click",()=>{
                 console.log(yearRangeDiv.innerText);
                 generateCalendar(Number(yearRangeDiv.innerText.slice(0,4)),months.indexOf(monthButton.innerText));
                 calendar.childNodes[1].style.display = "none";
-                // remove all childs from yearsRange element
-                while(yearsWrapper.firstChild){
-                    yearsWrapper.removeChild(yearsWrapper.firstChild);
-                }
+                clearChildElements(yearsWrapper);
                 yearsRange.forEach(year=>{
                     const yearDiv = document.createElement("div");
                     yearDiv.innerText = year;
@@ -307,10 +304,7 @@ yearLeftButton.addEventListener("click",()=>{
         generateCalendar(Number(yearButton.innerText)-10,months.indexOf(monthButton.innerText));
         // hide calendar days
         calendar.childNodes[1].style.display = "none";
-        // remove all childs from yearsRange element
-        while(yearsWrapper.firstChild){
-            yearsWrapper.removeChild(yearsWrapper.firstChild);
-        }
+        clearChildElements(yearsWrapper);
         yearsRange.forEach(year=>{
             const yearDiv = document.createElement("div");
             yearDiv.innerText = year;
@@ -332,10 +326,7 @@ yearLeftButton.addEventListener("click",()=>{
         generateCalendar(Number(yearButton.innerText)-100,months.indexOf(monthButton.innerText));
         // hide calendar days
         calendar.childNodes[1].style.display = "none";
-        // remove all childs from yearsRange element
-        while(yearsWrapper.firstChild){
-            yearsWrapper.removeChild(yearsWrapper.firstChild);
-        }
+        clearChildElements(yearsWrapper);
         yearsRanges.forEach(yearRange=>{
             const yearRangeDiv = document.createElement("div");
             yearRangeDiv.innerText = yearRange;
@@ -343,10 +334,7 @@ yearLeftButton.addEventListener("click",()=>{
                 console.log(yearRangeDiv.innerText);
                 generateCalendar(Number(yearRangeDiv.innerText.slice(0,4)),months.indexOf(monthButton.innerText));
                 calendar.childNodes[1].style.display = "none";
-                // remove all childs from yearsRange element
-                while(yearsWrapper.firstChild){
-                    yearsWrapper.removeChild(yearsWrapper.firstChild);
-                }
+                clearChildElements(yearsWrapper);
                 yearsRange.forEach(year=>{
                     const yearDiv = document.createElement("div");
                     yearDiv.innerText = year;
@@ -379,10 +367,7 @@ yearRightButton.addEventListener("click",()=>{
         generateCalendar(Number(yearButton.innerText)+10,months.indexOf(monthButton.innerText));
         // hide calendar days
         calendar.childNodes[1].style.display = "none";
-        // remove all childs from yearsRange element
-        while(yearsWrapper.firstChild){
-            yearsWrapper.removeChild(yearsWrapper.firstChild);
-        }
+        clearChildElements(yearsWrapper);
         yearsRange.forEach(year=>{
             const yearDiv = document.createElement("div");
             yearDiv.innerText = year;
@@ -404,10 +389,7 @@ yearRightButton.addEventListener("click",()=>{
         generateCalendar(Number(yearButton.innerText)+100,months.indexOf(monthButton.innerText));
         // hide calendar days
         calendar.childNodes[1].style.display = "none";
-        // remove all childs from yearsRange element
-        while(yearsWrapper.firstChild){
-            yearsWrapper.removeChild(yearsWrapper.firstChild);
-        }
+        clearChildElements(yearsWrapper);
         yearsRanges.forEach(yearRange=>{
             const yearRangeDiv = document.createElement("div");
             yearRangeDiv.innerText = yearRange;
@@ -415,10 +397,7 @@ yearRightButton.addEventListener("click",()=>{
                 console.log(yearRangeDiv.innerText);
                 generateCalendar(Number(yearRangeDiv.innerText.slice(0,4)),months.indexOf(monthButton.innerText));
                 calendar.childNodes[1].style.display = "none";
-                // remove all childs from yearsRange element
-                while(yearsWrapper.firstChild){
-                    yearsWrapper.removeChild(yearsWrapper.firstChild);
-                }
+                clearChildElements(yearsWrapper);
                 yearsRange.forEach(year=>{
                     const yearDiv = document.createElement("div");
                     yearDiv.innerText = year;
