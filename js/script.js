@@ -132,6 +132,7 @@ function generateCalendar(year,month){
     table.appendChild(row); // add the last row
     calendar.appendChild(monthYearWrapper);
     calendar.appendChild(table);  
+    calendar.appendChild(yearsWrapper);
 }
 
 // show / hide calendar
@@ -209,13 +210,42 @@ rangeYearButton.addEventListener("click",()=>{
     }
 
     if(tenYearsRangeMode){
+        console.log("100 years");
         yearsRanges.forEach(yearRange=>{
             const yearRangeDiv = document.createElement("div");
             yearRangeDiv.innerText = yearRange;
+            yearRangeDiv.addEventListener("click",()=>{
+                console.log(yearRangeDiv.innerText);
+                generateCalendar(Number(yearRangeDiv.innerText.slice(0,4)),months.indexOf(monthButton.innerText));
+                calendar.childNodes[1].style.display = "none";
+                // remove all childs from yearsRange element
+                while(yearsWrapper.firstChild){
+                    yearsWrapper.removeChild(yearsWrapper.firstChild);
+                }
+                yearsRange.forEach(year=>{
+                    const yearDiv = document.createElement("div");
+                    yearDiv.innerText = year;
+                    yearDiv.addEventListener("click",()=>{
+                        generateCalendar(year,months.indexOf(monthButton.innerText));
+                        monthYearWrapper.removeChild(rangeYearButton);
+                        yearButton.style.display = "block";
+                        monthLeftButton.style.display = "block";
+                        monthRightButton.style.display = "block";
+                        monthButton.style.display = "block";
+                        yearButton.innerText = year;
+                        yearsWrapper.style.display = "none";
+                    });
+                    yearsWrapper.appendChild(yearDiv);
+                });
+                rangeYearButton.innerText = `${yearsRange[1]} - ${yearsRange[yearsRange.length-1]}`;
+            });
             yearsWrapper.appendChild(yearRangeDiv);
+            calendar.appendChild(yearsWrapper);
         });
+        rangeYearButton.innerText = `${yearsRanges[1].slice(0,4)} - ${yearsRanges[yearsRanges.length-2].slice(-4)}`;
         tenYearsRangeMode = false;
     }else{
+        console.log("10 years");
         yearsRange.forEach(year=>{
             const yearDiv = document.createElement("div");
             yearDiv.innerText = year;
@@ -230,6 +260,7 @@ rangeYearButton.addEventListener("click",()=>{
             });
             yearsWrapper.appendChild(yearDiv);
         });
+        rangeYearButton.innerText = `${yearsRange[1]} - ${yearsRange[yearsRange.length-1]}`;
         tenYearsRangeMode = true;
     }
     
