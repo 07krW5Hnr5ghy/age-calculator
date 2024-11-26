@@ -187,6 +187,15 @@ yearButton.addEventListener("click",()=>{
     yearsRange.forEach(year=>{
         const yearDiv = document.createElement("div");
         yearDiv.innerText = year;
+        yearDiv.addEventListener("click",()=>{
+            generateCalendar(year,months.indexOf(monthButton.innerText));
+            monthYearWrapper.removeChild(rangeYearButton);
+            yearButton.style.display = "block";
+            monthLeftButton.style.display = "block";
+            monthRightButton.style.display = "block";
+            monthButton.style.display = "block";
+            yearButton.innerText = year;
+        });
         yearsWrapper.appendChild(yearDiv);
     });
     calendar.appendChild(yearsWrapper);
