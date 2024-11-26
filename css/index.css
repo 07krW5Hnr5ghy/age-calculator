@@ -55,24 +55,16 @@ body{
     box-shadow: 0 4px 8px rgba(0, 0, 0,0.1);
     z-index:1000;
 }
-.year-wrapper{
+.month-year-wrapper{
     display: flex;
     flex-direction: row;
     justify-content: center;
     align-items: center;
+    gap:10px;
 }
-.year-month-wrapper{
-    width: 100%;
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-}
-.month-selector{
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+.month-year-button{
+    background-color: black;
+    color:white;
 }
 .calendar table{
     width: 100%;
@@ -89,6 +81,22 @@ body{
     background: #007bff;
     color:white;
     border-radius: 50%;
+}
+.months-wrapper{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    gap:30%;
+    flex-wrap: wrap;
+}
+.years-wrapper{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    gap:30%;
+    flex-wrap: wrap;
 }
 .calculate-button{
     width: 100%;

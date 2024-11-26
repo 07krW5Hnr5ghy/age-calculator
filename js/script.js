@@ -7,22 +7,45 @@ const months = ["january","february","march","april","may","june","july","august
 const daysOfWeek = ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
 
 // create years button
-const yearWrapper = document.createElement("div");
-const yearButton = document.createElement("button");
+const monthYearWrapper = document.createElement("div");
+monthYearWrapper.classList.add("month-year-wrapper");
+const monthButton = document.createElement("div");
+monthButton.classList.add("month-year-button");
+monthYearWrapper.appendChild(monthButton);
+const yearButton = document.createElement("div");
+yearButton.classList.add("month-year-button");
+monthYearWrapper.appendChild(yearButton);
+
+// create year menu section
+const yearsWrapper = document.createElement("div");
+yearsWrapper.classList.add("years-wrapper");
+const rangeYearButton = document.createElement("div");
+rangeYearButton.classList.add("range-year-button");
+
 
 let selectedDate = null;
+let yearsRange = [];
 
 function generateCalendar(year,month){
+    console.log(months[month]);
+    console.log(year);
     calendar.innerHTML = ""; // clear the calendar
     const daysInMonth = new Date(year,month+1,0).getDate();
-    console.log(daysInMonth);
     const firstDayIndex = new Date(year,month,1).getDay();
-    console.log(firstDayIndex);
 
-    calendar.appendChild(yearWrapper);
+    calendar.appendChild(monthYearWrapper);
 
-    yearButton.innerText = `${months[month]} ${year}`;
-
+    monthButton.innerText = months[month];
+    yearButton.innerText = year;
+    
+    // range start year 
+    let yearRangeStart = year - Number(String(year).slice(3,4));
+    let yearRange = `${yearRangeStart} - ${yearRangeStart+10}`;
+    rangeYearButton.innerHTML = yearRange;
+    for(let iYear = yearRangeStart-1;iYear<=yearRangeStart+10;iYear++){
+        yearsRange.push(iYear);
+    }
+    
     // create table structure
     const table = document.createElement("table");
     const headerRow = document.createElement("tr");
@@ -71,9 +94,11 @@ function generateCalendar(year,month){
         row.appendChild(cell);
     }
 
+    
 
     table.appendChild(row); // add the last row
-    calendar.appendChild(table);
+    calendar.appendChild(monthYearWrapper);
+    calendar.appendChild(table);  
 }
 
 // show / hide calendar
@@ -87,15 +112,46 @@ dateButton.addEventListener("click",()=>{
     }
 });
 
-// toggle on/off year month menu
-yearButton.addEventListener("click",()=>{
-    
+// toggle on/off month menu
+monthButton.addEventListener("click",()=>{
+    // hide calendar days
+    calendar.childNodes[1].style.display = "none";
+    // create month table element
+    const monthsWrapper = document.createElement("div");
+    monthsWrapper.classList.add("months-wrapper");
+    months.forEach((month,index)=>{
+        const monthDiv = document.createElement("div");
+        monthDiv.innerText = month.slice(0,3);
+        monthsWrapper.appendChild(monthDiv);
+        monthDiv.addEventListener("click",()=>{
+            generateCalendar(Number(yearButton.innerText),index);
+            console.log(calendar.style.display);
+        });
+    });
+    calendar.appendChild(monthsWrapper);
+    /* remove year and month buttons and replace with current year button */
+    monthButton.style.display = "none";
+    yearButton.style.display = "none";
+    const currentYearButton = document.createElement("div");
+    currentYearButton.innerText = yearButton.innerText;
+    monthYearWrapper.appendChild(currentYearButton);
 });
 
-// close the calendar when clicking outside
-document.addEventListener("click",(event)=>{
-    if(!event.target.closest(".date-wrapper")){
-        calendar.style.display = "none";
-    }
+// toggle on/off year menu
+yearButton.addEventListener("click",()=>{
+    // hide calendar days
+    calendar.childNodes[1].style.display = "none";
+    /* remove year and month buttons and replace with year range button */
+    yearButton.style.display = "none";
+    monthButton.style.display = "none";
+    monthYearWrapper.appendChild(rangeYearButton);
+    const yearsWrapper = document.createElement("div");
+    yearsWrapper.classList.add("years-wrapper");
+    yearsRange.forEach(year=>{
+        const yearDiv = document.createElement("div");
+        yearDiv.innerText = year;
+        yearsWrapper.appendChild(yearDiv);
+    });
+    calendar.appendChild(yearsWrapper);
 });
 
