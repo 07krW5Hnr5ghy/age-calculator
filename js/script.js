@@ -125,16 +125,12 @@ monthButton.addEventListener("click",()=>{
         monthsWrapper.appendChild(monthDiv);
         monthDiv.addEventListener("click",()=>{
             generateCalendar(Number(yearButton.innerText),index);
-            console.log(calendar.style.display);
+
         });
     });
     calendar.appendChild(monthsWrapper);
     /* remove year and month buttons and replace with current year button */
     monthButton.style.display = "none";
-    yearButton.style.display = "none";
-    const currentYearButton = document.createElement("div");
-    currentYearButton.innerText = yearButton.innerText;
-    monthYearWrapper.appendChild(currentYearButton);
 });
 
 // toggle on/off year menu
