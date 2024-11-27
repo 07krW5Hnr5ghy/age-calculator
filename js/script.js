@@ -7,16 +7,16 @@ const calendar = document.querySelector("#calendar");
 const months = ["january","february","march","april","may","june","july","august","september","october","november","december"];
 const daysOfWeek = ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
 
-// create navigation menu
+// initialize navigation menu
 const monthYearWrapper = document.createElement("div");
 monthYearWrapper.classList.add("month-year-wrapper");
 const yearLeftButton = document.createElement("button");
 yearLeftButton.type = "button";
-yearLeftButton.innerText = "<<";
+setButtonValue(yearLeftButton,"<<");
 monthYearWrapper.appendChild(yearLeftButton);
 const monthLeftButton = document.createElement("button");
 monthLeftButton.type = "button";
-monthLeftButton.innerText = "<";
+setButtonValue(monthLeftButton,"<");
 monthYearWrapper.appendChild(monthLeftButton);
 const monthButton = document.createElement("div");
 monthButton.classList.add("month-year-button");
@@ -26,11 +26,11 @@ yearButton.classList.add("month-year-button");
 monthYearWrapper.appendChild(yearButton);
 const monthRightButton = document.createElement("button");
 monthRightButton.type = "button";
-monthRightButton.innerText = ">";
+setButtonValue(monthRightButton,">");
 monthYearWrapper.appendChild(monthRightButton);
 const yearRightButton = document.createElement("button");
 yearRightButton.type = "button";
-yearRightButton.innerText = ">>";
+setButtonValue(yearRightButton,">>");
 monthYearWrapper.appendChild(yearRightButton);
 
 // create year menu section
@@ -60,14 +60,14 @@ function clearChildElements(parent){
 
 function createYearDiv(year,onClickHandler){
     const yearDiv = document.createElement("div");
-    yearDiv.innerText = year;
+    setButtonValue(yearDiv,year);
     yearDiv.addEventListener("click",onClickHandler);
     return yearDiv;
 }
 
 function createYearRangeDiv(yearRange,onClickHandler){
     const yearRangeDiv = document.createElement("div");
-    yearRangeDiv.innerText = yearRange;
+    setButtonValue(yearRangeDiv,yearRange);
     yearRangeDiv.addEventListener("click",onClickHandler);
     return yearRangeDiv;
 }
@@ -80,6 +80,10 @@ function generateMonthYearMenu(){
     monthButton.style.display = "block";
     yearsWrapper.style.display = "none";
 }
+
+function setButtonValue(button,value){
+    button.innerText = value;
+};
 
 function populateYearRanges(year){
     // ten years range 
@@ -100,11 +104,11 @@ function populateYearRanges(year){
     }
 
     if(yearNavigationModeFlag === yearNavigationModes.tenYears){
-        rangeYearButton.innerText = tenYearRange;
+        setButtonValue(rangeYearButton,tenYearRange);
     }
 
     if(yearNavigationModeFlag === yearNavigationModes.hundredYears){
-        rangeYearButton.innerText = hundredYearRange;
+        setButtonValue(rangeYearButton,hundredYearRange);
     }
 }
 
@@ -121,8 +125,8 @@ function generateCalendar(year,month){
 
     calendar.appendChild(monthYearWrapper);
 
-    monthButton.innerText = months[month];
-    yearButton.innerText = year;
+    setButtonValue(monthButton,months[month]);
+    setButtonValue(yearButton,year);
 
     populateYearRanges(year);
 
@@ -201,7 +205,7 @@ monthButton.addEventListener("click",()=>{
     monthsWrapper.classList.add("months-wrapper");
     months.forEach((month,index)=>{
         const monthDiv = document.createElement("div");
-        monthDiv.innerText = month.slice(0,3);
+        setButtonValue(monthDiv,month.slice(0,3));
         monthsWrapper.appendChild(monthDiv);
         monthDiv.addEventListener("click",()=>{
             generateCalendar(Number(yearButton.innerText),index);
@@ -234,12 +238,12 @@ yearButton.addEventListener("click",()=>{
         yearsWrapper.appendChild(createYearDiv(year,()=>{
             generateCalendar(year,months.indexOf(monthButton.innerText));
             generateMonthYearMenu();
-            yearButton.innerText = year;
+            setButtonValue(yearButton,year);
             yearNavigationModeFlag = yearNavigationModes.year;
         }));
     });
     calendar.appendChild(yearsWrapper);
-    rangeYearButton.innerText = `${yearsRange[1]} - ${yearsRange[yearsRange.length-1]}`;
+    setButtonValue(rangeYearButton,`${yearsRange[1]} - ${yearsRange[yearsRange.length-1]}`);
     yearNavigationModeFlag = yearNavigationModes.tenYears;
 });
 
@@ -261,16 +265,16 @@ rangeYearButton.addEventListener("click",()=>{
                     yearsWrapper.appendChild(createYearDiv(year,()=>{
                         generateCalendar(year,months.indexOf(monthButton.innerText));
                         generateMonthYearMenu();
-                        yearButton.innerText = year;
+                        setButtonValue(yearButton,year);
                         yearNavigationModeFlag = yearNavigationModes.tenYears;
                     }));
                 });
                 yearNavigationModeFlag=yearNavigationModes.tenYears;
-                rangeYearButton.innerText = `${yearsRange[1]} - ${yearsRange[yearsRange.length-1]}`;
+                setButtonValue(rangeYearButton,`${yearsRange[1]} - ${yearsRange[yearsRange.length-1]}`);
             }));
             calendar.appendChild(yearsWrapper);
         });
-        rangeYearButton.innerText = `${yearsRanges[1].slice(0,4)} - ${yearsRanges[yearsRanges.length-2].slice(-4)}`;
+        setButtonValue(rangeYearButton,`${yearsRanges[1].slice(0,4)} - ${yearsRanges[yearsRanges.length-2].slice(-4)}`);
         yearNavigationModeFlag = yearNavigationModes.hundredYears;
     }
 });
@@ -307,7 +311,7 @@ yearLeftButton.addEventListener("click",()=>{
             yearsWrapper.appendChild(createYearDiv(year,()=>{
                 generateCalendar(year,months.indexOf(monthButton.innerText));
                 generateMonthYearMenu();
-                yearButton.innerText = year;
+                setButtonValue(yearButton,year);
                 yearNavigationModeFlag = yearNavigationModes.year;
             }));
         });
@@ -326,13 +330,13 @@ yearLeftButton.addEventListener("click",()=>{
                     yearsWrapper.appendChild(createYearDiv(year,()=>{
                         generateCalendar(year,months.indexOf(monthButton.innerText));
                         generateMonthYearMenu();
-                        yearButton.innerText = year;
+                        setButtonValue(yearButton,year);
                         yearNavigationModeFlag = yearNavigationModes.tenYears;
                         console.log(`entering mode ${yearNavigationModeFlag}`);
                     }));
                 });
                 yearNavigationModeFlag = yearNavigationModes.tenYears;
-                rangeYearButton.innerText = `${yearsRange[1]} - ${yearsRange[yearsRange.length-1]}`;
+                setButtonValue(rangeYearButton,`${yearsRange[1]} - ${yearsRange[yearsRange.length-1]}`);
             }));
             calendar.appendChild(yearsWrapper);
         });
@@ -353,7 +357,7 @@ yearRightButton.addEventListener("click",()=>{
             yearsWrapper.appendChild(createYearDiv(year,()=>{
                 generateCalendar(year,months.indexOf(monthButton.innerText));
                 generateMonthYearMenu();
-                yearButton.innerText = year;
+                setButtonValue(yearButton,year);
                 yearNavigationModeFlag = yearNavigationModes.year;
             }));
         });
@@ -372,12 +376,12 @@ yearRightButton.addEventListener("click",()=>{
                     yearsWrapper.appendChild(createYearDiv(year,()=>{
                         generateCalendar(year,months.indexOf(monthButton.innerText));
                         generateMonthYearMenu();
-                        yearButton.innerText = year;
+                        setButtonValue(yearButton,year);
                         yearNavigationModeFlag = yearNavigationModes.tenYears;
                     }));
                 });
                 yearNavigationModeFlag = yearNavigationModes.tenYears;
-                rangeYearButton.innerText = `${yearsRange[1]} - ${yearsRange[yearsRange.length-1]}`;
+                setButtonValue(rangeYearButton,`${yearsRange[1]} - ${yearsRange[yearsRange.length-1]}`);
             }));
             calendar.appendChild(yearsWrapper);
         });
