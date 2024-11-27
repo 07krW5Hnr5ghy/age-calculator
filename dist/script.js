@@ -6431,7 +6431,8 @@
   var calendar = document.querySelector("#calendar");
   var calculateButton = document.querySelector(".calculate-button");
   calculateButton.type = "button";
-  var answerSpace = document.querySelector(".answer");
+  calculateButton.disabled = true;
+  var answerWrapper = document.querySelector(".answer-wrapper");
   var months2 = ["january", "february", "march", "april", "may", "june", "july", "august", "september", "october", "november", "december"];
   var daysOfWeek = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
   var monthYearWrapper = document.createElement("div");
@@ -6568,6 +6569,7 @@
         calendar.style.display = "none";
         generateCalendar(year, month);
         setYearNavigationModeFlag(yearNavigationModes.year);
+        calculateButton.disabled = false;
       });
       row.appendChild(cell);
     }
@@ -6744,12 +6746,21 @@
   calculateButton.addEventListener("click", () => {
     const now2 = DateTime.local();
     const birthDate = DateTime.local(selectedDate.getFullYear(), selectedDate.getMonth(), selectedDate.getDate());
-    const i = Interval.fromDateTimes(birthDate, now2);
-    const iYears = Number(String(i.length("years")).split(".")[0]);
-    const iMonths = Number(String(i.length("months")).split(".")[0]) % iYears;
-    answerSpace.innerText = `${iYears} years ${iMonths} months`;
-    console.log(i.length("years"));
-    console.log(i.length("months"));
+    const interval = Interval.fromDateTimes(birthDate, now2);
+    const iYears = Number(String(interval.length("years")).split(".")[0]);
+    const iMonths = Number(String(interval.length("months")).split(".")[0]) % iYears;
+    console.log(birthDate.day);
+    console.log(birthDate.month);
+    console.log(birthDate.year);
+    clearChildElements(answerWrapper);
+    const answer = document.createElement("p");
+    answer.classList.add(".answer");
+    if (birthDate.day > now2.day || birthDate.month > now2.month || birthDate.year > now2.year) {
+      answer.innerText = "The birth date cannot be greater than or equal to today's date";
+    } else {
+      answer.innerHTML = `You are <strong class="answer-data">${iYears} years ${iMonths} months</strong> old</p>`;
+    }
+    answerWrapper.appendChild(answer);
   });
   window.addEventListener("load", () => {
     form.reset();
