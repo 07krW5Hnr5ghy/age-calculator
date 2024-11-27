@@ -81,18 +81,7 @@ function generateMonthYearMenu(){
     yearsWrapper.style.display = "none";
 }
 
-function generateCalendar(year,month){
-    console.log(months[month]);
-    console.log(year);
-    calendar.innerHTML = ""; // clear the calendar
-    const daysInMonth = new Date(year,month+1,0).getDate();
-    const firstDayIndex = new Date(year,month,1).getDay();
-
-    calendar.appendChild(monthYearWrapper);
-
-    monthButton.innerText = months[month];
-    yearButton.innerText = year;
-
+function populateYearRanges(year){
     // ten years range 
     let tenYearRangeStart = year - Number(String(year).slice(3,4));
     let tenYearRange = `${tenYearRangeStart} - ${tenYearRangeStart+10}`;
@@ -117,6 +106,21 @@ function generateCalendar(year,month){
     if(yearNavigationModeFlag === yearNavigationModes.hundredYears){
         rangeYearButton.innerText = hundredYearRange;
     }
+}
+
+function generateCalendar(year,month){
+    console.log(months[month]);
+    console.log(year);
+    calendar.innerHTML = ""; // clear the calendar
+    const daysInMonth = new Date(year,month+1,0).getDate();
+    const firstDayIndex = new Date(year,month,1).getDay();
+
+    calendar.appendChild(monthYearWrapper);
+
+    monthButton.innerText = months[month];
+    yearButton.innerText = year;
+
+    populateYearRanges(year);
 
     // create table structure
     const table = document.createElement("table");
