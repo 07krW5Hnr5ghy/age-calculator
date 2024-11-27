@@ -6425,7 +6425,7 @@
   }
 
   // js/script.js
-  var form = document.querySelector("#calculator-wrapper");
+  var form = document.querySelector("#form-calculator");
   var dateInput = document.querySelector("#date-input");
   var dateButton = document.querySelector("#calendar-button");
   var calendar = document.querySelector("#calendar");
@@ -6433,8 +6433,8 @@
   calculateButton.type = "button";
   calculateButton.disabled = true;
   var answerWrapper = document.querySelector(".answer-wrapper");
-  var months2 = ["january", "february", "march", "april", "may", "june", "july", "august", "september", "october", "november", "december"];
-  var daysOfWeek = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+  var months2 = ["jan", "feb", "mar", "apr", "may", "jun", "jul", "aug", "sep", "oct", "nov", "dec"];
+  var daysOfWeek = ["S", "M", "T", "W", "T", "F", "S"];
   var monthYearWrapper = document.createElement("div");
   monthYearWrapper.classList.add("month-year-wrapper");
   var yearLeftButton = document.createElement("button");
@@ -6461,6 +6461,7 @@
   monthYearWrapper.appendChild(yearRightButton);
   var yearsWrapper = document.createElement("div");
   yearsWrapper.classList.add("years-wrapper");
+  yearsWrapper.style.display = "none";
   var rangeYearButton = document.createElement("div");
   rangeYearButton.classList.add("range-year-button");
   var monthsWrapper = document.createElement("div");
@@ -6540,26 +6541,38 @@
     setButtonValue(monthButton, months2[month]);
     setButtonValue(yearButton, year);
     populateYearRanges(year);
-    const table = document.createElement("table");
-    const headerRow = document.createElement("tr");
+    const table = document.createElement("div");
+    table.classList.add("calendar-table");
+    const headerRow = document.createElement("div");
+    headerRow.classList.add("calendar-week-header");
     daysOfWeek.forEach((day) => {
-      const th = document.createElement("th");
+      const th = document.createElement("div");
       th.textContent = day;
+      th.classList.add("calendar-week-days");
       headerRow.appendChild(th);
     });
     table.appendChild(headerRow);
-    let row = document.createElement("tr");
+    let row = document.createElement("div");
+    row.classList.add("calendar-table-rows");
     for (let i = 0; i < firstDayIndex; i++) {
-      const cell = document.createElement("td");
+      const cell = document.createElement("div");
+      cell.classList.add("calendar-month-days");
+      cell.innerHTML = "0";
       row.appendChild(cell);
     }
     for (let day = 1; day <= daysInMonth2; day++) {
       if (row.children.length === 7) {
         table.appendChild(row);
-        row = document.createElement("tr");
+        row = document.createElement("div");
+        row.classList.add("calendar-table-rows");
       }
-      const cell = document.createElement("td");
-      cell.textContent = day;
+      const cell = document.createElement("div");
+      cell.classList.add("calendar-month-days");
+      if (day < 10) {
+        cell.textContent = day;
+      } else {
+        cell.textContent = day;
+      }
       if (selectedDate && selectedDate.getFullYear() === year && selectedDate.getMonth() === month && selectedDate.getDate() === day) {
         cell.classList.add("current-date");
       }
@@ -6574,17 +6587,28 @@
       row.appendChild(cell);
     }
     table.appendChild(row);
+    const lastRow = table.lastElementChild;
+    const lastCell = lastRow.lastElementChild;
+    if (lastRow.childNodes.length < 7) {
+      console.log(7 - lastRow.childNodes.length);
+      while (lastRow.childNodes.length < 7) {
+        const cell = document.createElement("div");
+        cell.classList.add("calendar-month-days");
+        cell.textContent = "0";
+        lastRow.appendChild(cell);
+      }
+    }
     calendar.appendChild(monthYearWrapper);
     calendar.appendChild(table);
     calendar.appendChild(yearsWrapper);
   }
   dateButton.addEventListener("click", () => {
-    if (calendar.style.display === "block") {
+    if (calendar.style.display === "flex") {
       calendar.style.display = "none";
     } else {
       const today = /* @__PURE__ */ new Date();
       generateCalendar(today.getFullYear(), today.getMonth());
-      calendar.style.display = "block";
+      calendar.style.display = "flex";
     }
   });
   monthButton.addEventListener("click", () => {

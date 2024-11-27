@@ -1,5 +1,5 @@
 body{
-    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;    
+    font-family:Arial, Helvetica, sans-serif;    
 }
 .page-wrapper{
     display: flex;
@@ -8,20 +8,24 @@ body{
     align-items: center;
 }
 .calculator-wrapper{
-    display: flex;
+    display: inline-flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     gap:10px;
-    width: 350px;
+}
+.form-calculator{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: start;
+    gap:10px;
 }
 .label-wrapper{
     display: flex;
     flex-direction: row;
     justify-content: left;
     align-items: center;
-    width: 100%;
-    font-size: 10pt;
 }
 .date-wrapper{
     display: flex;
@@ -31,12 +35,10 @@ body{
     border: 2px solid black;
     border-radius: 6px;
     padding: 6px;
-    width: 96%;
     position: relative;
 }
 .date-input{
     border: none;
-    width: 90%;
 }
 .calendar-button{
     background-color: transparent;
@@ -46,48 +48,82 @@ body{
     position: absolute;
     top:100%;
     left:0;
-    width: 94%;
     background: white;
     border: 1px solid #ccc;
     border-radius: 4px;
     display: none;
-    padding:10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0,0.1);
     z-index:1000;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    padding: 6px 0;
+    gap:0.5em;
 }
 .month-year-wrapper{
     display: flex;
     flex-direction: row;
     justify-content: center;
     align-items: center;
-    gap:10px;
 }
 .month-year-button{
     background-color: black;
     color:white;
 }
-.calendar table{
+.calendar-table{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
     width: 100%;
-    border-collapse: collapse;
 }
-.calendar th{
-    background: #007bff;
+.calendar-week-header{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    background-color: black;
+}
+.calendar-week-days{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-size: 10pt;
+    width: 14.30%;
+    padding: 0.25em 0;
+    color: white;
+}
+
+.calendar-table-rows{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+.calendar-month-days{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 14.30%;
+    padding: 0.25em 0;
+    font-size: 10pt;
+    border: 1px solid black;
+}
+.calendar-month-days:hover{
+    background-color: black;
     color:white;
-}
-.calendar td:hover{
-    background: #f0f0f0;
-}
-.calendar .current-date{
-    background: #007bff;
-    color:white;
-    border-radius: 50%;
+    cursor: pointer;
 }
 .months-wrapper{
     display: flex;
     flex-direction: row;
     justify-content: space-around;
     align-items: center;
-    gap:30%;
     flex-wrap: wrap;
 }
 .years-wrapper{
@@ -95,18 +131,17 @@ body{
     flex-direction: row;
     justify-content: space-around;
     align-items: center;
-    gap:30%;
     flex-wrap: wrap;
 }
 .calculate-button{
-    width: 100%;
     background-color: black;
     color:white;
     border: none;
     border-radius: 6px;
     font-size: 11pt;
     padding: 8px;
+    width: 100%;
 }
 .answer-wrapper{
-    font-size: 14pt;
+    font-size: 11pt;
 }

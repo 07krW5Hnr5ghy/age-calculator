@@ -1,5 +1,5 @@
 import { DateTime,Interval } from "luxon";
-const form = document.querySelector("#calculator-wrapper");
+const form = document.querySelector("#form-calculator");
 const dateInput = document.querySelector("#date-input");
 const dateButton = document.querySelector("#calendar-button");
 const calendar = document.querySelector("#calendar");
@@ -9,8 +9,8 @@ calculateButton.disabled = true;
 const answerWrapper = document.querySelector(".answer-wrapper");
 
 // lists
-const months = ["january","february","march","april","may","june","july","august","september","october","november","december"];
-const daysOfWeek = ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
+const months = ["jan","feb","mar","apr","may","jun","jul","aug","sep","oct","nov","dec"];
+const daysOfWeek = ["S","M","T","W","T","F","S"];
 
 // initialize navigation menu
 const monthYearWrapper = document.createElement("div");
@@ -41,6 +41,7 @@ monthYearWrapper.appendChild(yearRightButton);
 // create year menu section
 const yearsWrapper = document.createElement("div");
 yearsWrapper.classList.add("years-wrapper");
+yearsWrapper.style.display = "none";
 const rangeYearButton = document.createElement("div");
 rangeYearButton.classList.add("range-year-button");
 
@@ -145,21 +146,27 @@ function generateCalendar(year,month){
     populateYearRanges(year);
 
     // create table structure
-    const table = document.createElement("table");
-    const headerRow = document.createElement("tr");
+    const table = document.createElement("div");
+    table.classList.add("calendar-table");
+    const headerRow = document.createElement("div");
+    headerRow.classList.add("calendar-week-header");
 
     // add week day names
     daysOfWeek.forEach(day=>{
-        const th = document.createElement("th");
+        const th = document.createElement("div");
         th.textContent = day;
+        th.classList.add("calendar-week-days");
         headerRow.appendChild(th);
     });
     table.appendChild(headerRow);
 
     // add blank cells for days before the 1st
-    let row = document.createElement("tr");
+    let row = document.createElement("div");
+    row.classList.add("calendar-table-rows");
     for(let i = 0;i < firstDayIndex;i++){
-        const cell = document.createElement("td");
+        const cell = document.createElement("div");
+        cell.classList.add("calendar-month-days");
+        cell.innerHTML = "0";
         row.appendChild(cell);
     }
 
@@ -167,11 +174,17 @@ function generateCalendar(year,month){
     for(let day = 1;day<=daysInMonth;day++){
         if(row.children.length === 7){
             table.appendChild(row);
-            row = document.createElement("tr");
+            row = document.createElement("div");
+            row.classList.add("calendar-table-rows");
         }
-        const cell = document.createElement("td");
-        cell.textContent = day;
-
+        const cell = document.createElement("div");
+        cell.classList.add("calendar-month-days");
+        if(day<10){
+            cell.textContent = day;
+        }else{
+            cell.textContent = day;
+        }
+        
         // Highlight the selected date
         if(
             selectedDate && 
@@ -195,6 +208,18 @@ function generateCalendar(year,month){
     }
 
     table.appendChild(row); // add the last row 
+    // add spaces to the end of month
+    const lastRow = table.lastElementChild;
+    const lastCell = lastRow.lastElementChild;
+    if(lastRow.childNodes.length < 7){
+        console.log(7-lastRow.childNodes.length);
+        while(lastRow.childNodes.length<7){
+            const cell = document.createElement("div");
+            cell.classList.add("calendar-month-days");
+            cell.textContent = "0";
+            lastRow.appendChild(cell);
+        }
+    }
     calendar.appendChild(monthYearWrapper); // add the month year menu
     calendar.appendChild(table);  // add table
     calendar.appendChild(yearsWrapper); // add years space
@@ -202,12 +227,12 @@ function generateCalendar(year,month){
 
 // show / hide calendar
 dateButton.addEventListener("click",()=>{
-    if(calendar.style.display === "block"){
+    if(calendar.style.display === "flex"){
         calendar.style.display = "none";
     }else{
         const today = new Date();
         generateCalendar(today.getFullYear(), today.getMonth());
-        calendar.style.display = "block";
+        calendar.style.display = "flex";
     }
 });
 
