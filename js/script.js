@@ -1,8 +1,11 @@
-import { DateTime } from "luxon";
+import { DateTime,Interval } from "luxon";
 const form = document.querySelector("#calculator-wrapper");
 const dateInput = document.querySelector("#date-input");
 const dateButton = document.querySelector("#calendar-button");
 const calendar = document.querySelector("#calendar");
+const calculateButton = document.querySelector(".calculate-button");
+calculateButton.type = "button";
+const answerSpace = document.querySelector(".answer");
 
 // lists
 const months = ["january","february","march","april","may","june","july","august","september","october","november","december"];
@@ -39,6 +42,10 @@ const yearsWrapper = document.createElement("div");
 yearsWrapper.classList.add("years-wrapper");
 const rangeYearButton = document.createElement("div");
 rangeYearButton.classList.add("range-year-button");
+
+// create month menu section
+const monthsWrapper = document.createElement("div");
+monthsWrapper.classList.add("months-wrapper");
 
 // year navigation modes
 const yearNavigationModes = {
@@ -206,9 +213,8 @@ dateButton.addEventListener("click",()=>{
 monthButton.addEventListener("click",()=>{
     // hide calendar days
     hideMonthDays();
+    clearChildElements(monthsWrapper);
     // create month table element
-    const monthsWrapper = document.createElement("div");
-    monthsWrapper.classList.add("months-wrapper");
     months.forEach((month,index)=>{
         const monthDiv = document.createElement("div");
         setButtonValue(monthDiv,month.slice(0,3));
@@ -223,6 +229,7 @@ monthButton.addEventListener("click",()=>{
     monthButton.style.display = "none";
     monthLeftButton.style.display = "none";
     monthRightButton.style.display = "none";
+    monthsWrapper.style.display = "flex";
 });
 
 // toggle on/off year menu
@@ -234,6 +241,7 @@ yearButton.addEventListener("click",()=>{
     monthButton.style.display = "none";
     monthLeftButton.style.display = "none";
     monthRightButton.style.display = "none";
+    monthsWrapper.style.display = "none";
     monthYearWrapper.removeChild(yearRightButton);
     monthYearWrapper.appendChild(rangeYearButton);
     monthYearWrapper.appendChild(yearRightButton);
@@ -379,11 +387,19 @@ yearRightButton.addEventListener("click",()=>{
     }
 });
 
+calculateButton.addEventListener("click",()=>{
+    const now = DateTime.local();
+    const birthDate = DateTime.local(selectedDate.getFullYear(),selectedDate.getMonth(),selectedDate.getDate());
+    const i = Interval.fromDateTimes(birthDate,now);
+    const iYears = Number(String(i.length('years')).split('.')[0]);
+    const iMonths = Number(String(i.length('months')).split('.')[0])%iYears;
+    answerSpace.innerText = `${iYears} years ${iMonths} months`;
+    console.log(i.length('years'));
+    console.log(i.length('months'));
+});
+
 // loading the page again
 window.addEventListener("load",()=>{
     form.reset();
 });
 
-// Example: Using Luxon to format the current date and time
-const now = DateTime.local();
-console.log("Current Date and Time:", now.toLocaleString(DateTime.DATETIME_MED));

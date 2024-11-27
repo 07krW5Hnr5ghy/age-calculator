@@ -6429,6 +6429,9 @@
   var dateInput = document.querySelector("#date-input");
   var dateButton = document.querySelector("#calendar-button");
   var calendar = document.querySelector("#calendar");
+  var calculateButton = document.querySelector(".calculate-button");
+  calculateButton.type = "button";
+  var answerSpace = document.querySelector(".answer");
   var months2 = ["january", "february", "march", "april", "may", "june", "july", "august", "september", "october", "november", "december"];
   var daysOfWeek = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
   var monthYearWrapper = document.createElement("div");
@@ -6459,6 +6462,8 @@
   yearsWrapper.classList.add("years-wrapper");
   var rangeYearButton = document.createElement("div");
   rangeYearButton.classList.add("range-year-button");
+  var monthsWrapper = document.createElement("div");
+  monthsWrapper.classList.add("months-wrapper");
   var yearNavigationModes = {
     year: 1,
     tenYears: 2,
@@ -6582,8 +6587,7 @@
   });
   monthButton.addEventListener("click", () => {
     hideMonthDays();
-    const monthsWrapper = document.createElement("div");
-    monthsWrapper.classList.add("months-wrapper");
+    clearChildElements(monthsWrapper);
     months2.forEach((month, index) => {
       const monthDiv = document.createElement("div");
       setButtonValue(monthDiv, month.slice(0, 3));
@@ -6596,6 +6600,7 @@
     monthButton.style.display = "none";
     monthLeftButton.style.display = "none";
     monthRightButton.style.display = "none";
+    monthsWrapper.style.display = "flex";
   });
   yearButton.addEventListener("click", () => {
     hideMonthDays();
@@ -6603,6 +6608,7 @@
     monthButton.style.display = "none";
     monthLeftButton.style.display = "none";
     monthRightButton.style.display = "none";
+    monthsWrapper.style.display = "none";
     monthYearWrapper.removeChild(yearRightButton);
     monthYearWrapper.appendChild(rangeYearButton);
     monthYearWrapper.appendChild(yearRightButton);
@@ -6735,9 +6741,17 @@
       });
     }
   });
+  calculateButton.addEventListener("click", () => {
+    const now2 = DateTime.local();
+    const birthDate = DateTime.local(selectedDate.getFullYear(), selectedDate.getMonth(), selectedDate.getDate());
+    const i = Interval.fromDateTimes(birthDate, now2);
+    const iYears = Number(String(i.length("years")).split(".")[0]);
+    const iMonths = Number(String(i.length("months")).split(".")[0]) % iYears;
+    answerSpace.innerText = `${iYears} years ${iMonths} months`;
+    console.log(i.length("years"));
+    console.log(i.length("months"));
+  });
   window.addEventListener("load", () => {
     form.reset();
   });
-  var now2 = DateTime.local();
-  console.log("Current Date and Time:", now2.toLocaleString(DateTime.DATETIME_MED));
 })();
