@@ -108,6 +108,10 @@ function populateYearRanges(year){
     }
 }
 
+function hideMonthDays(){
+    calendar.childNodes[1].style.display = "none";
+}
+
 function generateCalendar(year,month){
     console.log(months[month]);
     console.log(year);
@@ -191,7 +195,7 @@ dateButton.addEventListener("click",()=>{
 // toggle on/off month menu
 monthButton.addEventListener("click",()=>{
     // hide calendar days
-    calendar.childNodes[1].style.display = "none";
+    hideMonthDays();
     // create month table element
     const monthsWrapper = document.createElement("div");
     monthsWrapper.classList.add("months-wrapper");
@@ -215,7 +219,7 @@ monthButton.addEventListener("click",()=>{
 yearButton.addEventListener("click",()=>{
     console.log(yearNavigationModeFlag);
     // hide calendar days
-    calendar.childNodes[1].style.display = "none";
+    hideMonthDays();
     /* remove year and month buttons and replace with year range button */
     yearButton.style.display = "none";
     monthButton.style.display = "none";
@@ -250,7 +254,7 @@ rangeYearButton.addEventListener("click",()=>{
             yearsWrapper.appendChild(createYearRangeDiv(yearRange,()=>{
                 generateCalendar(Number(yearRange.slice(0,4)),months.indexOf(monthButton.innerText));
                 console.log("clicking ten years range");
-                calendar.childNodes[1].style.display = "none";
+                hideMonthDays();
                 clearChildElements(yearsWrapper);
                 console.log(`entering mode ${yearNavigationModeFlag}`);
                 yearsRange.forEach(year=>{
@@ -297,7 +301,7 @@ yearLeftButton.addEventListener("click",()=>{
     if(yearNavigationModeFlag===yearNavigationModes.tenYears){
         generateCalendar(Number(yearButton.innerText)-10,months.indexOf(monthButton.innerText));
         // hide calendar days
-        calendar.childNodes[1].style.display = "none";
+        hideMonthDays();
         clearChildElements(yearsWrapper);
         yearsRange.forEach(year=>{
             yearsWrapper.appendChild(createYearDiv(year,()=>{
@@ -311,12 +315,12 @@ yearLeftButton.addEventListener("click",()=>{
     if(yearNavigationModeFlag===yearNavigationModes.hundredYears){
         generateCalendar(Number(yearButton.innerText)-100,months.indexOf(monthButton.innerText));
         // hide calendar days
-        calendar.childNodes[1].style.display = "none";
+        hideMonthDays();
         clearChildElements(yearsWrapper);
         yearsRanges.forEach(yearRange=>{
             yearsWrapper.appendChild(createYearRangeDiv(yearRange,()=>{
                 generateCalendar(Number(yearRange.slice(0,4)),months.indexOf(monthButton.innerText));
-                calendar.childNodes[1].style.display = "none";
+                hideMonthDays();
                 clearChildElements(yearsWrapper);
                 yearsRange.forEach(year=>{
                     yearsWrapper.appendChild(createYearDiv(year,()=>{
@@ -343,7 +347,7 @@ yearRightButton.addEventListener("click",()=>{
     if(yearNavigationModeFlag===yearNavigationModes.tenYears){
         generateCalendar(Number(yearButton.innerText)+10,months.indexOf(monthButton.innerText));
         // hide calendar days
-        calendar.childNodes[1].style.display = "none";
+        hideMonthDays();
         clearChildElements(yearsWrapper);
         yearsRange.forEach(year=>{
             yearsWrapper.appendChild(createYearDiv(year,()=>{
@@ -357,18 +361,17 @@ yearRightButton.addEventListener("click",()=>{
     if(yearNavigationModeFlag===yearNavigationModes.hundredYears){
         generateCalendar(Number(yearButton.innerText)+100,months.indexOf(monthButton.innerText));
         // hide calendar days
-        calendar.childNodes[1].style.display = "none";
+        hideMonthDays();
         clearChildElements(yearsWrapper);
         yearsRanges.forEach(yearRange=>{
             yearsWrapper.appendChild(createYearRangeDiv(yearRange,()=>{
                 generateCalendar(Number(yearRange.slice(0,4)),months.indexOf(monthButton.innerText));
-                calendar.childNodes[1].style.display = "none";
+                hideMonthDays();
                 clearChildElements(yearsWrapper);
                 yearsRange.forEach(year=>{ 
                     yearsWrapper.appendChild(createYearDiv(year,()=>{
                         generateCalendar(year,months.indexOf(monthButton.innerText));
-                        generateMonthYearMenu()
-                        monthYearWrapper.removeChild(rangeYearButton);
+                        generateMonthYearMenu();
                         yearButton.innerText = year;
                         yearNavigationModeFlag = yearNavigationModes.tenYears;
                     }));
