@@ -124,8 +124,6 @@ function hideMonthDays(){
 }
 
 function generateCalendar(year,month){
-    console.log(months[month]);
-    console.log(year);
     calendar.innerHTML = ""; // clear the calendar
     const daysInMonth = new Date(year,month+1,0).getDate();
     const firstDayIndex = new Date(year,month,1).getDay();
@@ -228,7 +226,6 @@ monthButton.addEventListener("click",()=>{
 
 // toggle on/off year menu
 yearButton.addEventListener("click",()=>{
-    console.log(yearNavigationModeFlag);
     // hide calendar days
     hideMonthDays();
     /* remove year and month buttons and replace with year range button */
@@ -255,18 +252,13 @@ yearButton.addEventListener("click",()=>{
 
 // enter range years mode
 rangeYearButton.addEventListener("click",()=>{
-    console.log(yearNavigationModeFlag);
-    
     if(yearNavigationModeFlag===yearNavigationModes.tenYears){
         clearChildElements(yearsWrapper);
-        console.log("10 years");
         yearsRanges.forEach(yearRange=>{
             yearsWrapper.appendChild(createYearRangeDiv(yearRange,()=>{
                 generateCalendar(Number(yearRange.slice(0,4)),months.indexOf(monthButton.innerText));
-                console.log("clicking ten years range");
                 hideMonthDays();
                 clearChildElements(yearsWrapper);
-                console.log(`entering mode ${yearNavigationModeFlag}`);
                 yearsRange.forEach(year=>{
                     yearsWrapper.appendChild(createYearDiv(year,()=>{
                         generateCalendar(year,months.indexOf(monthButton.innerText));
@@ -303,7 +295,6 @@ monthRightButton.addEventListener("click",()=>{
 
 // left and right year button navigation
 yearLeftButton.addEventListener("click",()=>{
-    console.log(yearNavigationModeFlag);
     if(yearNavigationModeFlag===yearNavigationModes.year){
         generateCalendar(Number(yearButton.innerText)-1,months.indexOf(monthButton.innerText));
     }
@@ -335,7 +326,6 @@ yearLeftButton.addEventListener("click",()=>{
                         generateCalendar(year,months.indexOf(monthButton.innerText));
                         generateMonthYearMenu(yearNavigationModes.tenYears);
                         setButtonValue(yearButton,year);
-                        console.log(`entering mode ${yearNavigationModeFlag}`);
                     }));
                 });
                 setYearNavigationModeFlag(yearNavigationModes.tenYears);
@@ -347,7 +337,6 @@ yearLeftButton.addEventListener("click",()=>{
 });
 
 yearRightButton.addEventListener("click",()=>{
-    console.log(yearNavigationModeFlag);
     if(yearNavigationModeFlag===yearNavigationModes.year){
         generateCalendar(Number(yearButton.innerText)+1,months.indexOf(monthButton.innerText));
     }
