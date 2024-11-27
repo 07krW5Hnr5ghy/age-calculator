@@ -3,27 +3,6 @@ const dateInput = document.querySelector("#date-input");
 const dateButton = document.querySelector("#calendar-button");
 const calendar = document.querySelector("#calendar");
 
-// utility functions
-function clearChildElements(parent){
-    while(parent.firstChild){
-        parent.removeChild(parent.firstChild);
-    }
-}
-
-function createYearDiv(year,onClickHandler){
-    const yearDiv = document.createElement("div");
-    yearDiv.innerText = year;
-    yearDiv.addEventListener("click",onClickHandler);
-    return yearDiv;
-}
-
-function createYearRangeDiv(yearRange,onClickHandler){
-    const yearRangeDiv = document.createElement("div");
-    yearRangeDiv.innerText = yearRange;
-    yearRangeDiv.addEventListener("click",onClickHandler);
-    return yearRangeDiv;
-}
-
 // lists
 const months = ["january","february","march","april","may","june","july","august","september","october","november","december"];
 const daysOfWeek = ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
@@ -71,6 +50,27 @@ let selectedDate = null;
 let yearsRange = [];
 let yearsRanges = [];
 let yearNavigationModeFlag = yearNavigationModes.year;
+
+// utility functions
+function clearChildElements(parent){
+    while(parent.firstChild){
+        parent.removeChild(parent.firstChild);
+    }
+}
+
+function createYearDiv(year,onClickHandler){
+    const yearDiv = document.createElement("div");
+    yearDiv.innerText = year;
+    yearDiv.addEventListener("click",onClickHandler);
+    return yearDiv;
+}
+
+function createYearRangeDiv(yearRange,onClickHandler){
+    const yearRangeDiv = document.createElement("div");
+    yearRangeDiv.innerText = yearRange;
+    yearRangeDiv.addEventListener("click",onClickHandler);
+    return yearRangeDiv;
+}
 
 function generateMonthYearMenu(){
     monthYearWrapper.removeChild(rangeYearButton);
