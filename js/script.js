@@ -85,6 +85,10 @@ function setButtonValue(button,value){
     button.innerText = value;
 };
 
+function setYearNavigationModeFlag(mode){
+    yearNavigationModeFlag = mode;
+};
+
 function populateYearRanges(year){
     // ten years range 
     let tenYearRangeStart = year - Number(String(year).slice(3,4));
@@ -173,16 +177,16 @@ function generateCalendar(year,month){
             dateInput.value = selectedDate.toISOString().split("T")[0].replaceAll("-","/");
             calendar.style.display = "none"; // Hide the calendar
             generateCalendar(year,month); // Re-render calendar
-            yearNavigationModeFlag = yearNavigationModes.year;
+            setYearNavigationModeFlag(yearNavigationModes.year);
         });
 
         row.appendChild(cell);
     }
 
-    table.appendChild(row); // add the last row
-    calendar.appendChild(monthYearWrapper);
-    calendar.appendChild(table);  
-    calendar.appendChild(yearsWrapper);
+    table.appendChild(row); // add the last row 
+    calendar.appendChild(monthYearWrapper); // add the month year menu
+    calendar.appendChild(table);  // add table
+    calendar.appendChild(yearsWrapper); // add years space
 }
 
 // show / hide calendar
@@ -239,12 +243,12 @@ yearButton.addEventListener("click",()=>{
             generateCalendar(year,months.indexOf(monthButton.innerText));
             generateMonthYearMenu();
             setButtonValue(yearButton,year);
-            yearNavigationModeFlag = yearNavigationModes.year;
+            setYearNavigationModeFlag(yearNavigationModeFlag.year);
         }));
     });
     calendar.appendChild(yearsWrapper);
     setButtonValue(rangeYearButton,`${yearsRange[1]} - ${yearsRange[yearsRange.length-1]}`);
-    yearNavigationModeFlag = yearNavigationModes.tenYears;
+    setYearNavigationModeFlag(yearNavigationModes.tenYears);
 });
 
 // enter range years mode
@@ -266,16 +270,16 @@ rangeYearButton.addEventListener("click",()=>{
                         generateCalendar(year,months.indexOf(monthButton.innerText));
                         generateMonthYearMenu();
                         setButtonValue(yearButton,year);
-                        yearNavigationModeFlag = yearNavigationModes.tenYears;
+                        setYearNavigationModeFlag(yearNavigationModes.tenYears);
                     }));
                 });
-                yearNavigationModeFlag=yearNavigationModes.tenYears;
+                setYearNavigationModeFlag(yearNavigationModes.tenYears);
                 setButtonValue(rangeYearButton,`${yearsRange[1]} - ${yearsRange[yearsRange.length-1]}`);
             }));
             calendar.appendChild(yearsWrapper);
         });
         setButtonValue(rangeYearButton,`${yearsRanges[1].slice(0,4)} - ${yearsRanges[yearsRanges.length-2].slice(-4)}`);
-        yearNavigationModeFlag = yearNavigationModes.hundredYears;
+        setYearNavigationModeFlag(yearNavigationModes.hundredYears);
     }
 });
 
@@ -312,7 +316,7 @@ yearLeftButton.addEventListener("click",()=>{
                 generateCalendar(year,months.indexOf(monthButton.innerText));
                 generateMonthYearMenu();
                 setButtonValue(yearButton,year);
-                yearNavigationModeFlag = yearNavigationModes.year;
+                setYearNavigationModeFlag(yearNavigationModes.year);
             }));
         });
     }
@@ -331,11 +335,11 @@ yearLeftButton.addEventListener("click",()=>{
                         generateCalendar(year,months.indexOf(monthButton.innerText));
                         generateMonthYearMenu();
                         setButtonValue(yearButton,year);
-                        yearNavigationModeFlag = yearNavigationModes.tenYears;
+                        setYearNavigationModeFlag(yearNavigationModes.tenYears);
                         console.log(`entering mode ${yearNavigationModeFlag}`);
                     }));
                 });
-                yearNavigationModeFlag = yearNavigationModes.tenYears;
+                setYearNavigationModeFlag(yearNavigationModes.tenYears);
                 setButtonValue(rangeYearButton,`${yearsRange[1]} - ${yearsRange[yearsRange.length-1]}`);
             }));
             calendar.appendChild(yearsWrapper);
@@ -358,7 +362,7 @@ yearRightButton.addEventListener("click",()=>{
                 generateCalendar(year,months.indexOf(monthButton.innerText));
                 generateMonthYearMenu();
                 setButtonValue(yearButton,year);
-                yearNavigationModeFlag = yearNavigationModes.year;
+                setYearNavigationModeFlag(yearNavigationModes.year);
             }));
         });
     }
@@ -377,10 +381,10 @@ yearRightButton.addEventListener("click",()=>{
                         generateCalendar(year,months.indexOf(monthButton.innerText));
                         generateMonthYearMenu();
                         setButtonValue(yearButton,year);
-                        yearNavigationModeFlag = yearNavigationModes.tenYears;
+                        setYearNavigationModeFlag(yearNavigationModes.tenYears);
                     }));
                 });
-                yearNavigationModeFlag = yearNavigationModes.tenYears;
+                setYearNavigationModeFlag(yearNavigationModes.tenYears);
                 setButtonValue(rangeYearButton,`${yearsRange[1]} - ${yearsRange[yearsRange.length-1]}`);
             }));
             calendar.appendChild(yearsWrapper);
