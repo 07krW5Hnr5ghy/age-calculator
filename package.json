@@ -4,12 +4,16 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "esbuild js/script.js --bundle --outfile=dist/script.js",
+    "watch": "esbuild js/script.js --bundle --outfile=dist/script.js --watch"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
     "luxon": "^3.5.0"
+  },
+  "devDependencies": {
+    "esbuild": "^0.24.0"
   }
 }

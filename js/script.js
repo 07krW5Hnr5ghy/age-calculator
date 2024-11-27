@@ -1,3 +1,4 @@
+import { DateTime } from "luxon";
 const form = document.querySelector("#calculator-wrapper");
 const dateInput = document.querySelector("#date-input");
 const dateButton = document.querySelector("#calendar-button");
@@ -382,3 +383,7 @@ yearRightButton.addEventListener("click",()=>{
 window.addEventListener("load",()=>{
     form.reset();
 });
+
+// Example: Using Luxon to format the current date and time
+const now = DateTime.local();
+console.log("Current Date and Time:", now.toLocaleString(DateTime.DATETIME_MED));
