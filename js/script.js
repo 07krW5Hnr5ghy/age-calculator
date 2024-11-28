@@ -389,12 +389,21 @@ yearLeftButton.addEventListener("click",()=>{
         // hide calendar days
         hideMonthDays();
         clearChildElements(yearsWrapper);
+        let row = document.createElement("div");
         yearsRange.forEach(year=>{
-            yearsWrapper.appendChild(createYearDiv(year,()=>{
+            row.appendChild(createYearDiv(year,()=>{
                 generateCalendar(year,getButtonMonthIndex());
                 generateMonthYearMenu(yearNavigationModes.year);
                 setButtonValue(yearButton,year);
             }));
+            if(row.children.length===4){
+                yearsWrapper.appendChild(row);
+                row.classList.add("year-rows");
+                row = document.createElement("div");
+            }
+            if(yearsWrapper.children.length<3){
+                yearsWrapper.appendChild(row);
+            }
         });
     }
     if(yearNavigationModeFlag===yearNavigationModes.hundredYears){
