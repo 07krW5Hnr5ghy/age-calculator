@@ -64,12 +64,30 @@ body{
 .month-year-wrapper{
     display: flex;
     flex-direction: row;
-    justify-content: center;
+    justify-content: space-around;
     align-items: center;
+    width: 100%;
+    padding: 0.5em 0;
 }
 .month-year-button{
+    padding: 0.25em 0.25em;
+    text-transform: capitalize;
+}
+.month-year-button:hover{
+    cursor: pointer;
     background-color: black;
     color:white;
+}
+.menu-button{
+    background-color: transparent;
+    border: none;
+    padding: 0;
+    font-size: 12pt;
+}
+.menu-button:hover{
+    cursor: pointer;
+    background-color: black;
+    color: white;
 }
 .calendar-table{
     display: flex;
