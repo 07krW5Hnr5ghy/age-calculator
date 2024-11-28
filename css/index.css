@@ -137,6 +137,9 @@ body{
     color:white;
     cursor: pointer;
 }
+.calendar-blank-days{
+    color:transparent;
+}
 .months-wrapper,.years-wrapper{
     display: flex;
     flex-direction: column;

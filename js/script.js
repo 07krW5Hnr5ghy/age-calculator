@@ -176,6 +176,7 @@ function generateCalendar(year,month){
     for(let i = 0;i < firstDayIndex;i++){
         const cell = document.createElement("div");
         cell.classList.add("calendar-month-days");
+        cell.classList.add("calendar-blank-days");
         cell.innerHTML = "0";
         row.appendChild(cell);
     }
@@ -220,6 +221,7 @@ function generateCalendar(year,month){
         while(lastRow.childNodes.length<7){
             const cell = document.createElement("div");
             cell.classList.add("calendar-month-days");
+            cell.classList.add("calendar-blank-days");
             cell.textContent = "0";
             lastRow.appendChild(cell);
         }
