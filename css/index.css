@@ -167,15 +167,33 @@ body{
     cursor: pointer;
     color:white;
 }
-/* .years-wrapper{
+.years-range-wrapper{
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    width: 100%;
 }
-.years-row{
-
-} */
+.year-range-rows{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    width: 100%;
+}
+.year-range{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-transform: capitalize;
+    width: 50%;
+}
+.year-range:hover{
+    background-color: black;
+    color:white;
+    cursor: pointer;
+}
 .calculate-button{
     background-color: black;
     color:white;

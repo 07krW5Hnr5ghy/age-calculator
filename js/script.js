@@ -82,6 +82,7 @@ function createYearDiv(year,onClickHandler){
 
 function createYearRangeDiv(yearRange,onClickHandler){
     const yearRangeDiv = document.createElement("div");
+    yearRangeDiv.classList.add("year-range");
     setButtonValue(yearRangeDiv,yearRange);
     yearRangeDiv.addEventListener("click",onClickHandler);
     return yearRangeDiv;
@@ -314,21 +315,44 @@ yearButton.addEventListener("click",()=>{
 rangeYearButton.addEventListener("click",()=>{
     if(yearNavigationModeFlag===yearNavigationModes.tenYears){
         clearChildElements(yearsWrapper);
+        yearsWrapper.classList.remove("years-wrapper");
+        yearsWrapper.classList.add("years-range-wrapper");
+        // generate year table
+        let row = document.createElement("div");
         yearsRanges.forEach(yearRange=>{
-            yearsWrapper.appendChild(createYearRangeDiv(yearRange,()=>{
+            row.appendChild(createYearRangeDiv(yearRange,()=>{
                 generateCalendar(Number(yearRange.slice(0,4)),months.indexOf(monthButton.innerText));
                 hideMonthDays();
                 clearChildElements(yearsWrapper);
+                yearsWrapper.classList.add("years-wrapper");
+                yearsWrapper.classList.remove("years-range-wrapper");
+                let innerRow = document.createElement("div");
                 yearsRange.forEach(year=>{
-                    yearsWrapper.appendChild(createYearDiv(year,()=>{
+                    innerRow.appendChild(createYearDiv(year,()=>{
                         generateCalendar(year,months.indexOf(monthButton.innerText));
                         generateMonthYearMenu(yearNavigationModes.tenYears);
                         setButtonValue(yearButton,year);
                     }));
+                    if(innerRow.children.length===4){
+                        yearsWrapper.appendChild(innerRow);
+                        innerRow.classList.add("year-rows");
+                        innerRow = document.createElement("div");
+                    }
+                    if(yearsWrapper.children.length<3){
+                        yearsWrapper.appendChild(innerRow);
+                    }
                 });
                 setYearNavigationModeFlag(yearNavigationModes.tenYears);
                 setButtonValue(rangeYearButton,`${yearsRange[1]} - ${yearsRange[yearsRange.length-1]}`);
             }));
+            if(row.children.length===2){
+                yearsWrapper.appendChild(row);
+                row.classList.add("year-range-rows");
+                row = document.createElement("div");
+            }
+            if(yearsWrapper.children.length<6){
+                yearsWrapper.appendChild(row);
+            }
             calendar.appendChild(yearsWrapper);
         });
         setButtonValue(rangeYearButton,`${yearsRanges[1].slice(0,4)} - ${yearsRanges[yearsRanges.length-2].slice(-4)}`);
