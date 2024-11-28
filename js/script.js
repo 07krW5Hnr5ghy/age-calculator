@@ -237,6 +237,10 @@ dateButton.addEventListener("click",()=>{
         const today = new Date();
         generateCalendar(today.getFullYear(), today.getMonth());
         calendar.style.display = "flex";
+        yearsWrapper.style.display = "none";
+        rangeYearButton.style.display = "none";
+        yearButton.style.display = "block";
+        yearButton.innerText = today.getFullYear();
     }
 });
 
@@ -311,6 +315,7 @@ yearButton.addEventListener("click",()=>{
     calendar.appendChild(yearsWrapper);
     setButtonValue(rangeYearButton,`${yearsRange[1]} - ${yearsRange[yearsRange.length-1]}`);
     setYearNavigationModeFlag(yearNavigationModes.tenYears);
+    rangeYearButton.style.display = "block";
 });
 
 // enter range years mode
