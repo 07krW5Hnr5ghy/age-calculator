@@ -213,5 +213,13 @@ body{
     align-items: center;
     flex-wrap: wrap;
     padding: 1em;
-    text-align: justify;
+    text-align: center;
+}
+.current-date{
+    background-color: black;
+    color:white;
+}
+.current-date:hover{
+    background-color: white;
+    color:black;
 }
