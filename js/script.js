@@ -300,7 +300,7 @@ yearButton.addEventListener("click",()=>{
     yearsRange.forEach(year=>{
         row.appendChild(createYearDiv(year,()=>{
             generateCalendar(year,getButtonMonthIndex());
-            generateMonthYearMenu(yearNavigationModeFlag.year);
+            generateMonthYearMenu(yearNavigationModes.year);
             setButtonValue(yearButton,year);
         }));
         if(row.children.length===4){
