@@ -183,11 +183,7 @@ function generateCalendar(year,month){
         }
         const cell = document.createElement("div");
         cell.classList.add("calendar-month-days");
-        if(day<10){
-            cell.textContent = day;
-        }else{
-            cell.textContent = day;
-        }
+        cell.textContent = day;
         
         // Highlight the selected date
         if(
@@ -245,15 +241,28 @@ monthButton.addEventListener("click",()=>{
     // hide calendar days
     hideMonthDays();
     clearChildElements(monthsWrapper);
-    // create month table element
+    // generate month element
+    let row = document.createElement("div");
     months.forEach((month,index)=>{
         const monthDiv = document.createElement("div");
-        setButtonValue(monthDiv,month.slice(0,3));
-        monthsWrapper.appendChild(monthDiv);
+        setButtonValue(monthDiv,month);
+        monthDiv.classList.add("month");
+        row.appendChild(monthDiv);
+        
+        if(row.children.length===4){
+            monthsWrapper.appendChild(row);
+            row.classList.add("month-rows");
+            row = document.createElement("div");
+        }
+        
         monthDiv.addEventListener("click",()=>{
             generateCalendar(Number(yearButton.innerText),index);
-
         });
+
+        if(monthsWrapper.children.length<3){
+            monthsWrapper.appendChild(row);
+        }
+
     });
     calendar.appendChild(monthsWrapper);
     // hide month, left month and right month buttons

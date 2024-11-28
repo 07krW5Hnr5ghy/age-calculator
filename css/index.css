@@ -139,10 +139,33 @@ body{
 }
 .months-wrapper{
     display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap:1em;
+    width: 100%;
+    padding: 0 0.5em;
+}
+.month-rows{
+    display: flex;
     flex-direction: row;
     justify-content: space-around;
     align-items: center;
-    flex-wrap: wrap;
+    width: 100%;
+}
+.month{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-transform: capitalize;
+    width: 25%;
+    padding: 0.5em 0;
+}
+.month:hover{
+    background-color: black;
+    cursor: pointer;
+    color:white;
 }
 .years-wrapper{
     display: flex;
