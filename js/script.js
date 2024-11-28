@@ -298,25 +298,7 @@ function generateRangeYears(buttonType){
     }
 }
 
-// show / hide calendar
-dateButton.addEventListener("click",()=>{
-    if(calendar.style.display === "flex"){
-        calendar.style.display = "none";
-    }else{
-        const today = new Date();
-        generateCalendar(today.getFullYear(), today.getMonth());
-        calendar.style.display = "flex";
-        yearsWrapper.style.display = "none";
-        rangeYearButton.style.display = "none";
-        yearButton.style.display = "block";
-        yearButton.innerText = today.getFullYear();
-        monthButton.style.display = "block";
-        monthButton.innerText = months[today.getMonth()];
-    }
-});
-
-// toggle on/off month menu
-monthButton.addEventListener("click",()=>{
+function generateMonths(){
     // hide calendar days
     hideMonthDays();
     clearChildElements(monthsWrapper);
@@ -336,6 +318,7 @@ monthButton.addEventListener("click",()=>{
         
         monthDiv.addEventListener("click",()=>{
             generateCalendar(Number(yearButton.innerText),index);
+            monthButton.style.display = "block";
         });
 
         if(monthsWrapper.children.length<3){
@@ -349,7 +332,27 @@ monthButton.addEventListener("click",()=>{
     monthLeftButton.style.display = "none";
     monthRightButton.style.display = "none";
     monthsWrapper.style.display = "flex";
+}
+
+// show / hide calendar
+dateButton.addEventListener("click",()=>{
+    if(calendar.style.display === "flex"){
+        calendar.style.display = "none";
+    }else{
+        const today = new Date();
+        generateCalendar(today.getFullYear(), today.getMonth());
+        calendar.style.display = "flex";
+        yearsWrapper.style.display = "none";
+        rangeYearButton.style.display = "none";
+        yearButton.style.display = "block";
+        yearButton.innerText = today.getFullYear();
+        monthButton.style.display = "block";
+        monthButton.innerText = months[today.getMonth()];
+    }
 });
+
+// toggle on/off month menu
+monthButton.addEventListener("click",generateMonths);
 
 // toggle on/off year menu
 yearButton.addEventListener("click",()=>{
