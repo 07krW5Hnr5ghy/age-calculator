@@ -452,8 +452,6 @@ yearLeftButton.addEventListener("click",()=>{
 });
 
 yearRightButton.addEventListener("click",()=>{
-    console.log(yearNavigationModeFlag);
-    console.log(monthButton.innerText);
     if(yearNavigationModeFlag===yearNavigationModes.year){
         generateCalendar(Number(yearButton.innerText)+1,getButtonMonthIndex());
     }
@@ -528,9 +526,6 @@ calculateButton.addEventListener("click",()=>{
     const interval = Interval.fromDateTimes(birthDate,now);
     const iYears = Number(String(interval.length('years')).split('.')[0]);
     const iMonths = Number(String(interval.length('months')).split('.')[0])%iYears;
-    console.log(birthDate.day);
-    console.log(birthDate.month);
-    console.log(birthDate.year);
     clearChildElements(answerWrapper);
     const answer = document.createElement("p");
     answer.classList.add(".answer");
