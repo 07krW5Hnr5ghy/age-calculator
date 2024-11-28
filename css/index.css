@@ -58,8 +58,7 @@ body{
     justify-content: center;
     align-items: center;
     width: 100%;
-    padding: 6px 0;
-    gap:0.5em;
+    gap:0;
 }
 .month-year-wrapper{
     display: flex;
@@ -68,27 +67,29 @@ body{
     align-items: center;
     width: 100%;
     padding: 0.5em 0;
+    background-color: black;
 }
 .month-year-button,.range-year-button{
     padding: 0.25em 0.25em;
     text-transform: capitalize;
+    color:white;
 }
 .month-year-button:hover,.range-year-button:hover{
     cursor: pointer;
-    background-color: black;
-    color:white;
+    background-color: white;
+    color:black;
 }
-.month-year-button:hover,.range-year-button:hover{}
 .menu-button{
     padding: 0.25em 0.25em;
     background-color: transparent;
     border: none;
     font-size: 12pt;
+    color:white;
 }
 .menu-button:hover{
     cursor: pointer;
-    background-color: black;
-    color: white;
+    background-color: white;
+    color:black;
 }
 .calendar-table{
     display: flex;
@@ -140,6 +141,10 @@ body{
 }
 .calendar-blank-days{
     color:transparent;
+}
+.calendar-blank-days:hover{
+    color:transparent;
+    background-color: transparent;
 }
 .months-wrapper,.years-wrapper{
     display: flex;
