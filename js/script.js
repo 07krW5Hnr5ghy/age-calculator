@@ -74,6 +74,7 @@ function clearChildElements(parent){
 
 function createYearDiv(year,onClickHandler){
     const yearDiv = document.createElement("div");
+    yearDiv.classList.add("year");
     setButtonValue(yearDiv,year);
     yearDiv.addEventListener("click",onClickHandler);
     return yearDiv;
@@ -241,7 +242,7 @@ monthButton.addEventListener("click",()=>{
     // hide calendar days
     hideMonthDays();
     clearChildElements(monthsWrapper);
-    // generate month element
+    // generate month table
     let row = document.createElement("div");
     months.forEach((month,index)=>{
         const monthDiv = document.createElement("div");
@@ -287,12 +288,22 @@ yearButton.addEventListener("click",()=>{
     monthYearWrapper.appendChild(yearRightButton);
     yearsWrapper.style.display = "flex";
     clearChildElements(yearsWrapper);
+    // generate year table
+    let row = document.createElement("div");
     yearsRange.forEach(year=>{
-        yearsWrapper.appendChild(createYearDiv(year,()=>{
+        row.appendChild(createYearDiv(year,()=>{
             generateCalendar(year,months.indexOf(monthButton.innerText));
             generateMonthYearMenu(yearNavigationModeFlag.year);
             setButtonValue(yearButton,year);
         }));
+        if(row.children.length===4){
+            yearsWrapper.appendChild(row);
+            row.classList.add("year-rows");
+            row = document.createElement("div");
+        }
+        if(yearsWrapper.children.length<3){
+            yearsWrapper.appendChild(row);
+        }
     });
     calendar.appendChild(yearsWrapper);
     setButtonValue(rangeYearButton,`${yearsRange[1]} - ${yearsRange[yearsRange.length-1]}`);

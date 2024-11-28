@@ -69,19 +69,19 @@ body{
     width: 100%;
     padding: 0.5em 0;
 }
-.month-year-button{
+.month-year-button,.range-year-button{
     padding: 0.25em 0.25em;
     text-transform: capitalize;
 }
-.month-year-button:hover{
+.month-year-button:hover,.range-year-button:hover{
     cursor: pointer;
     background-color: black;
     color:white;
 }
 .menu-button{
+    padding: 0.25em 0.25em;
     background-color: transparent;
     border: none;
-    padding: 0;
     font-size: 12pt;
 }
 .menu-button:hover{
@@ -137,7 +137,7 @@ body{
     color:white;
     cursor: pointer;
 }
-.months-wrapper{
+.months-wrapper,.years-wrapper{
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -146,14 +146,14 @@ body{
     width: 100%;
     padding: 0 0.5em;
 }
-.month-rows{
+.month-rows,.year-rows{
     display: flex;
     flex-direction: row;
     justify-content: space-around;
     align-items: center;
     width: 100%;
 }
-.month{
+.month,.year{
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -162,18 +162,20 @@ body{
     width: 25%;
     padding: 0.5em 0;
 }
-.month:hover{
+.month:hover,.year:hover{
     background-color: black;
     cursor: pointer;
     color:white;
 }
-.years-wrapper{
+/* .years-wrapper{
     display: flex;
-    flex-direction: row;
-    justify-content: space-around;
+    flex-direction: column;
+    justify-content: center;
     align-items: center;
-    flex-wrap: wrap;
 }
+.years-row{
+
+} */
 .calculate-button{
     background-color: black;
     color:white;
