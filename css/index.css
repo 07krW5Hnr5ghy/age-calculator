@@ -78,6 +78,7 @@ body{
     background-color: black;
     color:white;
 }
+.month-year-button:hover,.range-year-button:hover{}
 .menu-button{
     padding: 0.25em 0.25em;
     background-color: transparent;

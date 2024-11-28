@@ -62,8 +62,8 @@ const yearNavigationModes = {
 
 // types of Buttons
 const buttonTypes = {
-    button:0,
-    arrow:1
+    button:"button",
+    arrow:"arrow"
 }
 
 let selectedDate = null;
@@ -265,6 +265,39 @@ function generateYears(buttonType){
     }
 }
 
+function generateRangeYears(buttonType){
+    if(buttonType===buttonTypes.arrow){
+        hideMonthDays();
+    }
+    if(buttonType==buttonTypes.button){
+        yearsWrapper.classList.remove("years-wrapper");
+        yearsWrapper.classList.add("years-range-wrapper");
+    }
+    clearChildElements(yearsWrapper);
+    let row = document.createElement("div");
+    yearsRanges.forEach(yearRange=>{
+        row.appendChild(createYearRangeDiv(yearRange,()=>{
+            yearsWrapper.classList.add("years-wrapper");
+            yearsWrapper.classList.remove("years-range-wrapper");
+            generateCalendar(Number(yearRange.slice(0,4)),getButtonMonthIndex());
+            generateYears(buttonTypes.button);
+        }));
+        if(row.children.length===2){
+            yearsWrapper.appendChild(row);
+            row.classList.add("year-range-rows");
+            row = document.createElement("div");
+        }
+        if(yearsWrapper.children.length<6){
+            yearsWrapper.appendChild(row);
+        }
+        calendar.appendChild(yearsWrapper);
+    });
+    if(buttonType==buttonTypes.button){
+        setButtonValue(rangeYearButton,`${yearsRanges[1].slice(0,4)} - ${yearsRanges[yearsRanges.length-2].slice(-4)}`);
+        setYearNavigationModeFlag(yearNavigationModes.hundredYears);
+    }
+}
+
 // show / hide calendar
 dateButton.addEventListener("click",()=>{
     if(calendar.style.display === "flex"){
@@ -337,30 +370,7 @@ yearButton.addEventListener("click",()=>{
 // enter range years mode
 rangeYearButton.addEventListener("click",()=>{
     if(yearNavigationModeFlag===yearNavigationModes.tenYears){
-        clearChildElements(yearsWrapper);
-        yearsWrapper.classList.remove("years-wrapper");
-        yearsWrapper.classList.add("years-range-wrapper");
-        // generate year table
-        let row = document.createElement("div");
-        yearsRanges.forEach(yearRange=>{
-            row.appendChild(createYearRangeDiv(yearRange,()=>{
-                generateCalendar(Number(yearRange.slice(0,4)),getButtonMonthIndex());
-                yearsWrapper.classList.add("years-wrapper");
-                yearsWrapper.classList.remove("years-range-wrapper");
-                generateYears(buttonTypes.button);
-            }));
-            if(row.children.length===2){
-                yearsWrapper.appendChild(row);
-                row.classList.add("year-range-rows");
-                row = document.createElement("div");
-            }
-            if(yearsWrapper.children.length<6){
-                yearsWrapper.appendChild(row);
-            }
-            calendar.appendChild(yearsWrapper);
-        });
-        setButtonValue(rangeYearButton,`${yearsRanges[1].slice(0,4)} - ${yearsRanges[yearsRanges.length-2].slice(-4)}`);
-        setYearNavigationModeFlag(yearNavigationModes.hundredYears);
+        generateRangeYears(buttonTypes.button);
     }
 });
 
@@ -392,27 +402,7 @@ yearLeftButton.addEventListener("click",()=>{
     }
     if(yearNavigationModeFlag===yearNavigationModes.hundredYears){
         generateCalendar(Number(yearButton.innerText)-100,getButtonMonthIndex());
-        // hide calendar days
-        hideMonthDays();
-        clearChildElements(yearsWrapper);
-        let row = document.createElement("div");
-        yearsRanges.forEach(yearRange=>{
-            row.appendChild(createYearRangeDiv(yearRange,()=>{
-                yearsWrapper.classList.add("years-wrapper");
-                yearsWrapper.classList.remove("years-range-wrapper");
-                generateCalendar(Number(yearRange.slice(0,4)),getButtonMonthIndex());
-                generateYears(buttonTypes.button);
-            }));
-            if(row.children.length===2){
-                yearsWrapper.appendChild(row);
-                row.classList.add("year-range-rows");
-                row = document.createElement("div");
-            }
-            if(yearsWrapper.children.length<6){
-                yearsWrapper.appendChild(row);
-            }
-            calendar.appendChild(yearsWrapper);
-        });
+        generateRangeYears(buttonTypes.arrow);
     }
 });
 
@@ -426,25 +416,7 @@ yearRightButton.addEventListener("click",()=>{
     }
     if(yearNavigationModeFlag===yearNavigationModes.hundredYears){
         generateCalendar(Number(yearButton.innerText)+100,getButtonMonthIndex());
-        // hide calendar days
-        hideMonthDays();
-        clearChildElements(yearsWrapper);
-        let row = document.createElement("div");
-        yearsRanges.forEach(yearRange=>{
-            row.appendChild(createYearRangeDiv(yearRange,()=>{
-                generateCalendar(Number(yearRange.slice(0,4)),getButtonMonthIndex());
-                generateYears(buttonTypes.button);
-            }));
-            if(row.children.length===2){
-                yearsWrapper.appendChild(row);
-                row.classList.add("year-range-rows");
-                row = document.createElement("div");
-            }
-            if(yearsWrapper.children.length<6){
-                yearsWrapper.appendChild(row);
-            }
-            calendar.appendChild(yearsWrapper);
-        });
+        generateRangeYears(buttonTypes.arrow);
     }
 });
 
