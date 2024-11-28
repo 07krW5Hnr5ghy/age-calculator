@@ -60,6 +60,12 @@ const yearNavigationModes = {
     hundredYears:3,
 };
 
+// types of Buttons
+const buttonTypes = {
+    button:0,
+    arrow:1
+}
+
 let selectedDate = null;
 let yearsRange = [];
 let yearsRanges = [];
@@ -231,6 +237,34 @@ function generateCalendar(year,month){
     calendar.appendChild(yearsWrapper); // add years space
 }
 
+function generateYears(buttonType){
+    // hide calendar days
+    hideMonthDays();
+    clearChildElements(yearsWrapper);
+    // generate year table
+    let row = document.createElement("div");
+    yearsRange.forEach(year=>{
+        row.appendChild(createYearDiv(year,()=>{
+            generateCalendar(year,getButtonMonthIndex());
+            generateMonthYearMenu(yearNavigationModes.year);
+            setButtonValue(yearButton,year);
+        }));
+        if(row.children.length===4){
+            yearsWrapper.appendChild(row);
+            row.classList.add("year-rows");
+            row = document.createElement("div");
+        }
+        if(yearsWrapper.children.length<3){
+            yearsWrapper.appendChild(row);
+        }
+    });
+    calendar.appendChild(yearsWrapper);
+    if(buttonType===buttonTypes.button){
+        setYearNavigationModeFlag(yearNavigationModes.tenYears);
+        setButtonValue(rangeYearButton,`${yearsRange[1]} - ${yearsRange[yearsRange.length-1]}`);
+    }
+}
+
 // show / hide calendar
 dateButton.addEventListener("click",()=>{
     if(calendar.style.display === "flex"){
@@ -243,6 +277,8 @@ dateButton.addEventListener("click",()=>{
         rangeYearButton.style.display = "none";
         yearButton.style.display = "block";
         yearButton.innerText = today.getFullYear();
+        monthButton.style.display = "block";
+        monthButton.innerText = months[today.getMonth()];
     }
 });
 
@@ -284,8 +320,6 @@ monthButton.addEventListener("click",()=>{
 
 // toggle on/off year menu
 yearButton.addEventListener("click",()=>{
-    // hide calendar days
-    hideMonthDays();
     /* remove year and month buttons and replace with year range button */
     yearButton.style.display = "none";
     monthButton.style.display = "none";
@@ -296,27 +330,7 @@ yearButton.addEventListener("click",()=>{
     monthYearWrapper.appendChild(rangeYearButton);
     monthYearWrapper.appendChild(yearRightButton);
     yearsWrapper.style.display = "flex";
-    clearChildElements(yearsWrapper);
-    // generate year table
-    let row = document.createElement("div");
-    yearsRange.forEach(year=>{
-        row.appendChild(createYearDiv(year,()=>{
-            generateCalendar(year,getButtonMonthIndex());
-            generateMonthYearMenu(yearNavigationModes.year);
-            setButtonValue(yearButton,year);
-        }));
-        if(row.children.length===4){
-            yearsWrapper.appendChild(row);
-            row.classList.add("year-rows");
-            row = document.createElement("div");
-        }
-        if(yearsWrapper.children.length<3){
-            yearsWrapper.appendChild(row);
-        }
-    });
-    calendar.appendChild(yearsWrapper);
-    setButtonValue(rangeYearButton,`${yearsRange[1]} - ${yearsRange[yearsRange.length-1]}`);
-    setYearNavigationModeFlag(yearNavigationModes.tenYears);
+    generateYears(buttonTypes.button);
     rangeYearButton.style.display = "block";
 });
 
@@ -331,28 +345,9 @@ rangeYearButton.addEventListener("click",()=>{
         yearsRanges.forEach(yearRange=>{
             row.appendChild(createYearRangeDiv(yearRange,()=>{
                 generateCalendar(Number(yearRange.slice(0,4)),getButtonMonthIndex());
-                hideMonthDays();
-                clearChildElements(yearsWrapper);
                 yearsWrapper.classList.add("years-wrapper");
                 yearsWrapper.classList.remove("years-range-wrapper");
-                let innerRow = document.createElement("div");
-                yearsRange.forEach(year=>{
-                    innerRow.appendChild(createYearDiv(year,()=>{
-                        generateCalendar(year,getButtonMonthIndex());
-                        generateMonthYearMenu(yearNavigationModes.tenYears);
-                        setButtonValue(yearButton,year);
-                    }));
-                    if(innerRow.children.length===4){
-                        yearsWrapper.appendChild(innerRow);
-                        innerRow.classList.add("year-rows");
-                        innerRow = document.createElement("div");
-                    }
-                    if(yearsWrapper.children.length<3){
-                        yearsWrapper.appendChild(innerRow);
-                    }
-                });
-                setYearNavigationModeFlag(yearNavigationModes.tenYears);
-                setButtonValue(rangeYearButton,`${yearsRange[1]} - ${yearsRange[yearsRange.length-1]}`);
+                generateYears(buttonTypes.button);
             }));
             if(row.children.length===2){
                 yearsWrapper.appendChild(row);
@@ -393,25 +388,7 @@ yearLeftButton.addEventListener("click",()=>{
     }
     if(yearNavigationModeFlag===yearNavigationModes.tenYears){
         generateCalendar(Number(yearButton.innerText)-10,getButtonMonthIndex());
-        // hide calendar days
-        hideMonthDays();
-        clearChildElements(yearsWrapper);
-        let row = document.createElement("div");
-        yearsRange.forEach(year=>{
-            row.appendChild(createYearDiv(year,()=>{
-                generateCalendar(year,getButtonMonthIndex());
-                generateMonthYearMenu(yearNavigationModes.year);
-                setButtonValue(yearButton,year);
-            }));
-            if(row.children.length===4){
-                yearsWrapper.appendChild(row);
-                row.classList.add("year-rows");
-                row = document.createElement("div");
-            }
-            if(yearsWrapper.children.length<3){
-                yearsWrapper.appendChild(row);
-            }
-        });
+        generateYears(buttonTypes.arrow);
     }
     if(yearNavigationModeFlag===yearNavigationModes.hundredYears){
         generateCalendar(Number(yearButton.innerText)-100,getButtonMonthIndex());
@@ -464,25 +441,7 @@ yearRightButton.addEventListener("click",()=>{
     }
     if(yearNavigationModeFlag===yearNavigationModes.tenYears){
         generateCalendar(Number(yearButton.innerText)+10,getButtonMonthIndex());
-        // hide calendar days
-        hideMonthDays();
-        clearChildElements(yearsWrapper);
-        let row = document.createElement("div");
-        yearsRange.forEach(year=>{
-            row.appendChild(createYearDiv(year,()=>{
-                generateCalendar(year,getButtonMonthIndex());
-                generateMonthYearMenu(yearNavigationModes.year);
-                setButtonValue(yearButton,year);
-            }));
-            if(row.children.length===4){
-                yearsWrapper.appendChild(row);
-                row.classList.add("year-rows");
-                row = document.createElement("div");
-            }
-            if(yearsWrapper.children.length<3){
-                yearsWrapper.appendChild(row);
-            }
-        });
+        generateYears(buttonTypes.arrow);
     }
     if(yearNavigationModeFlag===yearNavigationModes.hundredYears){
         generateCalendar(Number(yearButton.innerText)+100,getButtonMonthIndex());
