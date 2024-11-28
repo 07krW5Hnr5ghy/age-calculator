@@ -441,6 +441,10 @@ calculateButton.addEventListener("click",()=>{
         birthDate.year > now.year
     ){
         answer.innerText = "The birth date cannot be greater than or equal to today's date";
+    }else if(
+        birthDate.year < (now.year-200) 
+    ){
+        answer.innerText = "the year of birth cannot be more than 200 years ago";
     }else{
         
         answer.innerHTML = `You are <strong class="answer-data">${iYears} years ${iMonths} months</strong> old</p>`;
