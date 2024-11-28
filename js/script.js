@@ -484,21 +484,39 @@ yearRightButton.addEventListener("click",()=>{
         // hide calendar days
         hideMonthDays();
         clearChildElements(yearsWrapper);
+        let row = document.createElement("div");
         yearsRanges.forEach(yearRange=>{
-            yearsWrapper.appendChild(createYearRangeDiv(yearRange,()=>{
+            row.appendChild(createYearRangeDiv(yearRange,()=>{
                 generateCalendar(Number(yearRange.slice(0,4)),getButtonMonthIndex());
                 hideMonthDays();
                 clearChildElements(yearsWrapper);
+                let innerRow = document.createElement("div");
                 yearsRange.forEach(year=>{ 
-                    yearsWrapper.appendChild(createYearDiv(year,()=>{
+                    innerRow.appendChild(createYearDiv(year,()=>{
                         generateCalendar(year,getButtonMonthIndex());
                         generateMonthYearMenu(yearNavigationModes.tenYears);
                         setButtonValue(yearButton,year);
                     }));
+                    if(innerRow.children.length===4){
+                        yearsWrapper.appendChild(innerRow);
+                        innerRow.classList.add("year-rows");
+                        innerRow = document.createElement("div");
+                    }
+                    if(yearsWrapper.children.length<3){
+                        yearsWrapper.appendChild(innerRow);
+                    }
                 });
                 setYearNavigationModeFlag(yearNavigationModes.tenYears);
                 setButtonValue(rangeYearButton,`${yearsRange[1]} - ${yearsRange[yearsRange.length-1]}`);
             }));
+            if(row.children.length===2){
+                yearsWrapper.appendChild(row);
+                row.classList.add("year-range-rows");
+                row = document.createElement("div");
+            }
+            if(yearsWrapper.children.length<6){
+                yearsWrapper.appendChild(row);
+            }
             calendar.appendChild(yearsWrapper);
         });
     }
