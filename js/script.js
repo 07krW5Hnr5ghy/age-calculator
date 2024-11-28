@@ -532,10 +532,13 @@ calculateButton.addEventListener("click",()=>{
     const birthDate = DateTime.local(selectedDate.getFullYear(),selectedDate.getMonth(),selectedDate.getDate());
     const interval = Interval.fromDateTimes(birthDate,now);
     const iYears = Number(String(interval.length('years')).split('.')[0]);
-    const iMonths = Number(String(interval.length('months')).split('.')[0])%iYears;
+    let iMonths = Number(String(interval.length('months')).split('.')[0]);
+    if(iYears>0){
+        iMonths = iMonths%iYears;
+    }
     clearChildElements(answerWrapper);
-    const answer = document.createElement("p");
-    answer.classList.add(".answer");
+    const answer = document.createElement("span");
+    answer.classList.add("answer");
     if(
         birthDate.day > now.day ||
         birthDate.month > now.month ||

@@ -207,5 +207,11 @@ body{
     width: 100%;
 }
 .answer-wrapper{
-    font-size: 11pt;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    padding: 1em;
+    text-align: justify;
 }
